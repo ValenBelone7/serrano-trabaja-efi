@@ -1,0 +1,357 @@
+/* ==========================================================================
+   SERRANO TRABAJA — style.css
+   Tokens CSS, Relieve Mecánico (Affordance Físico), 5 Estados & WCAG AA
+   ========================================================================== */
+
+/* 1. TOKENS DE DISEÑO & VARIABLES SEMÁNTICAS */
+:root {
+  --color-primary: #1D6FE0;
+  --color-primary-hover: #1857B3;
+  --color-primary-border: #14468F;
+  --color-surface: #FFFFFF;
+  --color-surface-muted: #F3F4F6;
+  --color-border: #D1D5DB;
+  --color-text: #111827;
+  --color-text-muted: #4B5563;
+
+  /* Variantes oscuras de texto para contraste >= 4.5:1 en modo claro */
+  --color-success-bg: #16A34A;
+  --color-success-text: #15803D; /* 4.60:1 */
+  --color-danger-bg: #DC2626;
+  --color-danger-text: #991B1B;  /* 6.89:1 */
+  --color-warning-bg: #D97706;
+  --color-warning-text: #B45309; /* 4.88:1 */
+  --color-info-bg: #0891B2;
+  --color-info-text: #0E7490;    /* 4.55:1 */
+  --color-focus-ring: #0891B2;
+
+  --hit-target-min: 56px;
+  --radius-btn: 12px;
+  --radius-card: 16px;
+}
+
+.dark {
+  --color-primary: #1D6FE0;
+  --color-primary-hover: #2563EB;
+  --color-primary-border: #1E40AF;
+  --color-surface: #0F172A;
+  --color-surface-muted: #1E293B;
+  --color-border: #334155;
+  --color-text: #F8FAFC;
+  --color-text-muted: #CBD5E1;
+
+  --color-success-text: #4ADE80; /* 11.6:1 */
+  --color-danger-text: #F87171;  /* 7.3:1 */
+  --color-warning-text: #FBBF24; /* 12.1:1 */
+  --color-info-text: #22D3EE;    /* 11.2:1 */
+  --color-focus-ring: #22D3EE;
+}
+
+/* 2. REGLA OBLIGATORIA: FORZAR TEXTO BLANCO EN FONDOS SÓLIDOS */
+.force-text-white,
+.force-text-white * {
+  color: #FFFFFF !important;
+}
+
+/* 3. COMPONENTES: BOTONES CON RELIEVE FÍSICO MECÁNICO (5 ESTADOS) */
+
+/* Base de Botón (mínimo 56px de alto universal) */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  min-height: var(--hit-target-min);
+  padding: 0.875rem 1.5rem;
+  font-size: 1.125rem; /* 18px */
+  font-weight: 700;
+  line-height: 1.25;
+  border-radius: var(--radius-btn);
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.1s ease, box-shadow 0.1s ease;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+/* Botón Primario: Fondo Azul, Borde inferior de 5px, Sombra de elevación */
+.btn-primary {
+  background-color: var(--color-primary);
+  color: #FFFFFF !important;
+  border: 2px solid var(--color-primary-hover);
+  border-bottom-width: 5px;
+  border-bottom-color: var(--color-primary-border);
+  box-shadow: 0 4px 10px rgba(29, 111, 224, 0.25);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--color-primary-hover);
+}
+
+/* Estado Active: Hundimiento de 2px, borde inferior se comprime a 3px, sombra reducida */
+.btn-primary:active:not(:disabled),
+.btn-primary.btn-active {
+  transform: translateY(2px);
+  border-bottom-width: 3px;
+  box-shadow: 0 1px 3px rgba(29, 111, 224, 0.3);
+}
+
+/* Estado Focus: Anillo visible de alto contraste (cyan) separado del borde */
+.btn-primary:focus-visible,
+.btn:focus-visible,
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: none !important;
+  box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 6px var(--color-focus-ring) !important;
+}
+
+.dark .btn-primary:focus-visible,
+.dark .btn:focus-visible,
+.dark button:focus-visible,
+.dark a:focus-visible,
+.dark input:focus-visible,
+.dark textarea:focus-visible {
+  box-shadow: 0 0 0 2px #020617, 0 0 0 6px var(--color-focus-ring) !important;
+}
+
+/* Estado Disabled: Plano, gris, sin sombra ni interactividad */
+.btn:disabled,
+.btn-primary:disabled,
+.btn-secondary:disabled {
+  background-color: #D1D5DB !important;
+  border-color: #9CA3AF !important;
+  border-bottom-width: 2px !important;
+  color: #4B5563 !important;
+  box-shadow: none !important;
+  transform: none !important;
+  cursor: not-allowed !important;
+  opacity: 0.85;
+}
+
+.dark .btn:disabled,
+.dark .btn-primary:disabled,
+.dark .btn-secondary:disabled {
+  background-color: #334155 !important;
+  border-color: #475569 !important;
+  border-bottom-width: 2px !important;
+  color: #94A3B8 !important;
+}
+
+/* Botón Secundario (Borde, fondo limpio con relieve sutil) */
+.btn-secondary {
+  background-color: #FFFFFF;
+  color: #111827;
+  border: 2px solid #D1D5DB;
+  border-bottom-width: 4px;
+  border-bottom-color: #9CA3AF;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.dark .btn-secondary {
+  background-color: #1E293B;
+  color: #F8FAFC;
+  border-color: #475569;
+  border-bottom-color: #334155;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: #F3F4F6;
+  border-color: #9CA3AF;
+}
+
+.dark .btn-secondary:hover:not(:disabled) {
+  background-color: #334155;
+  border-color: #64748B;
+}
+
+.btn-secondary:active:not(:disabled) {
+  transform: translateY(2px);
+  border-bottom-width: 2px;
+  box-shadow: none;
+}
+
+/* 4. CHIPS TÁCTILES INTERACTIVOS (Sin usar <select>) */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: var(--hit-target-min);
+  padding: 0.75rem 1.25rem;
+  font-size: 1.125rem; /* 18px */
+  font-weight: 600;
+  border-radius: 9999px; /* Pill */
+  border: 2px solid #D1D5DB;
+  border-bottom-width: 4px;
+  border-bottom-color: #9CA3AF;
+  background-color: #FFFFFF;
+  color: #111827;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.dark .chip {
+  background-color: #1E293B;
+  color: #F8FAFC;
+  border-color: #475569;
+  border-bottom-color: #334155;
+}
+
+.chip:hover {
+  background-color: #F3F4F6;
+  border-color: #9CA3AF;
+}
+
+.dark .chip:hover {
+  background-color: #334155;
+}
+
+/* Chip Seleccionado: Hundido, fondo azul primario y check visible */
+.chip[aria-pressed="true"],
+.chip.active {
+  background-color: var(--color-primary) !important;
+  color: #FFFFFF !important;
+  border-color: var(--color-primary-hover) !important;
+  border-bottom-width: 2px !important;
+  transform: translateY(2px);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.dark .chip[aria-pressed="true"],
+.dark .chip.active {
+  background-color: var(--color-primary) !important;
+  color: #FFFFFF !important;
+  border-color: #60A5FA !important;
+}
+
+/* 5. TARJETAS CON REACCIÓN TÁCTIL (Gestalt: Proximidad) */
+.card-tap {
+  background-color: #FFFFFF;
+  border: 2px solid #E5E7EB;
+  border-radius: var(--radius-card);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.dark .card-tap {
+  background-color: #0F172A;
+  border-color: #334155;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+}
+
+.card-tap:hover {
+  border-color: #93C5FD;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+}
+
+.dark .card-tap:hover {
+  border-color: #1D6FE0;
+}
+
+/* 6. CAMPOS DE ENTRADA (Mínimo 56px de alto, texto 18px) */
+.input-serrano {
+  width: 100%;
+  min-height: var(--hit-target-min);
+  padding: 0.875rem 1.125rem;
+  font-size: 1.125rem; /* 18px */
+  border-radius: var(--radius-btn);
+  border: 2px solid #D1D5DB;
+  background-color: #FFFFFF;
+  color: #111827;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.dark .input-serrano {
+  background-color: #0F172A;
+  color: #F8FAFC;
+  border-color: #475569;
+}
+
+.input-serrano:focus {
+  border-color: var(--color-primary);
+}
+
+.input-serrano.input-error {
+  border-color: var(--color-danger-bg) !important;
+  background-color: #FEF2F2 !important;
+}
+
+.dark .input-serrano.input-error {
+  background-color: #450A0A !important;
+}
+
+/* 7. SCROLL HORIZONTAL PROPIO PARA CHIPS (Evita scroll global de página) */
+.chips-scroll-x {
+  display: flex;
+  gap: 0.75rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  padding-top: 0.25rem;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+.chips-scroll-x::-webkit-scrollbar {
+  height: 6px;
+}
+
+.chips-scroll-x::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chips-scroll-x::-webkit-scrollbar-thumb {
+  background-color: #CBD5E1;
+  border-radius: 9999px;
+}
+
+.dark .chips-scroll-x::-webkit-scrollbar-thumb {
+  background-color: #475569;
+}
+
+/* 8. PESTAÑAS ACTIVAS DE NAVEGACIÓN */
+.nav-tab-mobile[aria-current="page"] {
+  color: var(--color-primary) !important;
+  position: relative;
+}
+
+.dark .nav-tab-mobile[aria-current="page"] {
+  color: #60A5FA !important;
+}
+
+.nav-tab-mobile[aria-current="page"]::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 2.25rem;
+  height: 4px;
+  border-radius: 0 0 4px 4px;
+  background-color: var(--color-primary);
+}
+
+.dark .nav-tab-mobile[aria-current="page"]::before {
+  background-color: #60A5FA;
+}
+
+.nav-item-desktop[aria-current="page"] {
+  color: var(--color-primary) !important;
+  background-color: #EFF6FF !important;
+}
+
+.dark .nav-item-desktop[aria-current="page"] {
+  color: #93C5FD !important;
+  background-color: #1E293B !important;
+}
+
+/* 9. RESPETO A PREFERS-REDUCED-MOTION */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,178 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2420" height="1100" viewBox="0 0 2420 1100" font-family="Inter, 'DejaVu Sans', sans-serif">
+<defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4B5563"/></marker><marker id="arrD" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4B5563"/></marker></defs>
+<rect width="2420" height="1100" fill="#fff"/>
+<text x="40" y="52" font-size="32" font-weight="700" fill="#111827">Serrano Trabaja — User Flow</text>
+<text x="40" y="84" font-size="17" fill="#4B5563">Camino principal y caminos de error · un solo perfil para los dos roles · etiquetas del Card Sorting (Reto 6) · octubre 2026</text>
+<rect x="20" y="110" width="2380" height="250" rx="14" fill="#F3F4F6"/>
+<text x="44" y="231.0" font-size="19" font-weight="700" fill="#111827">Ingreso</text>
+<text x="44" y="255.0" font-size="14" fill="#4B5563">cualquier vecino</text>
+<rect x="20" y="370" width="2380" height="280" rx="14" fill="#EFF6FF"/>
+<text x="44" y="506.0" font-size="19" font-weight="700" fill="#111827">Busco a alguien</text>
+<text x="44" y="530.0" font-size="14" fill="#4B5563">quien contrata</text>
+<rect x="20" y="660" width="2380" height="140" rx="14" fill="#F0FDF4"/>
+<text x="44" y="726.0" font-size="19" font-weight="700" fill="#111827">Plataforma</text>
+<text x="44" y="750.0" font-size="14" fill="#4B5563">app + Mercado Pago</text>
+<rect x="20" y="810" width="2380" height="180" rx="14" fill="#ECFEFF"/>
+<text x="44" y="896.0" font-size="19" font-weight="700" fill="#111827">Busco changas</text>
+<text x="44" y="920.0" font-size="14" fill="#4B5563">quien ofrece un oficio</text>
+<path d="M470.0,200.0 L505.0,200.0" fill="none" stroke="#4B5563" stroke-width="2.2" marker-end="url(#arr)"/>
+<path d="M705.0,200.0 L740.0,200.0" fill="none" stroke="#4B5563" stroke-width="2.2" marker-end="url(#arr)"/>
+<path d="M940.0,200.0 L975.0,200.0" fill="none" stroke="#4B5563" stroke-width="2.2" marker-end="url(#arr)"/>
+<path d="M1030.0,239.0 L1030.0,279.0" fill="none" stroke="#B45309" stroke-width="2.2" stroke-dasharray="8 6" marker-end="url(#arrD)"/>
+<text x="1020" y="262" text-anchor="end" font-size="13" font-weight="600" fill="#B45309" paint-order="stroke" stroke="#fff" stroke-width="5">si está mal</text>
+<path d="M1120.0,279.0 L1120.0,239.0" fill="none" stroke="#B45309" stroke-width="2.2" stroke-dasharray="8 6" marker-end="url(#arrD)"/>
+<text x="1130" y="262" text-anchor="start" font-size="13" font-weight="600" fill="#B45309" paint-order="stroke" stroke="#fff" stroke-width="5">reintenta</text>
+<path d="M1175.0,200.0 L1185.0,200.0" fill="none" stroke="#4B5563" stroke-width="2.2" marker-end="url(#arr)"/>
+<path d="M1310.0,262.0 L1310.0,384.0 L370.0,384.0 L370.0,416.0" fill="none" stroke="#1D6FE0" stroke-width="2.2" marker-end="url(#arr)"/>
+<text x="840" y="378" text-anchor="middle" font-size="13" font-weight="600" fill="#1D6FE0" paint-order="stroke" stroke="#fff" stroke-width="5">Busco a alguien</text>
+<path d="M1248.0,231.0 L1248.0,365.0 L252.0,365.0 L252.0,826.0 L370.0,826.0 L370.0,861.0" fill="none" stroke="#0E7490" stroke-width="2.2" marker-end="url(#arr)"/>
+<text x="645" y="360" text-anchor="middle" font-size="13" font-weight="600" fill="#0E7490" paint-order="stroke" stroke="#fff" stroke-width="5">Busco changas</text>
+<text x="1515" y="194" font-size="14" fill="#4B5563">Un solo perfil: lo cambia</text>
+<text x="1515" y="214" font-size="14" fill="#4B5563">cuando quiera en Mi perfil</text>
+<path d="M470.0,455.0 L505.0,455.0" fill="none" stroke="#1D6FE0" stroke-width="2.2" marker-end="url(#arr)"/>
+<path d="M705.0,455.0 L740.0,455.0" fill="none" stroke="#1D6FE0" stroke-width="2.2" marker-end="url(#arr)"/>
+<path d="M940.0,455.0 L975.0,455.0" fill="none" stroke="#1D6FE0" stroke-width="2.2" marker-end="url(#arr)"/>
+<path d="M1175.0,455.0 L1210.0,455.0" fill="none" stroke="#1D6FE0" stroke-width="2.2" marker-end="url(#arr)"/>
+<path d="M1410.0,455.0 L1445.0,455.0" fill="none" stroke="#1D6FE0" stroke-width="2.2" marker-end="url(#arr)"/>
+<path d="M1645.0,455.0 L1680.0,455.0" fill="none" stroke="#1D6FE0" stroke-width="2.2" marker-end="url(#arr)"/>
+<path d="M1880.0,455.0 L1915.0,455.0" fill="none" stroke="#1D6FE0" stroke-width="2.2" marker-end="url(#arr)"/>
+<path d="M2115.0,455.0 L2150.0,455.0" fill="none" stroke="#1D6FE0" stroke-width="2.2" marker-end="url(#arr)"/>
+<path d="M370.0,494.0 L370.0,536.0" fill="none" stroke="#1D6FE0" stroke-width="2.2" marker-end="url(#arr)"/>
+<text x="378" y="528" text-anchor="start" font-size="13" font-weight="600" fill="#1D6FE0" paint-order="stroke" stroke="#fff" stroke-width="5">o, sin buscar</text>
+<path d="M470.0,575.0 L505.0,575.0" fill="none" stroke="#B45309" stroke-width="2.2" stroke-dasharray="8 6" marker-end="url(#arrD)"/>
+<path d="M655.0,494.0 L655.0,516.0 L840.0,516.0 L840.0,536.0" fill="none" stroke="#4B5563" stroke-width="2.2" stroke-dasharray="8 6" marker-end="url(#arrD)"/>
+<path d="M1545.0,494.0 L1545.0,536.0" fill="none" stroke="#991B1B" stroke-width="2.2" stroke-dasharray="8 6" marker-end="url(#arrD)"/>
+<text x="1537" y="528" text-anchor="end" font-size="13" font-weight="600" fill="#991B1B" paint-order="stroke" stroke="#fff" stroke-width="5">si no empezó</text>
+<path d="M370.0,614.0 L370.0,730.0 L505.0,730.0" fill="none" stroke="#15803D" stroke-width="2.2" marker-end="url(#arr)"/>
+<text x="378" y="690" text-anchor="start" font-size="13" font-weight="600" fill="#15803D" paint-order="stroke" stroke="#fff" stroke-width="5">publica el pedido</text>
+<path d="M605.0,769.0 L605.0,861.0" fill="none" stroke="#15803D" stroke-width="2.2" marker-end="url(#arr)"/>
+<path d="M1310.0,494.0 L1310.0,691.0" fill="none" stroke="#15803D" stroke-width="2.2" marker-end="url(#arr)"/>
+<text x="1318" y="640" text-anchor="start" font-size="13" font-weight="600" fill="#15803D" paint-order="stroke" stroke="#fff" stroke-width="5">si es con Mercado Pago</text>
+<path d="M1410.0,730.0 L1445.0,730.0" fill="none" stroke="#B45309" stroke-width="2.2" stroke-dasharray="8 6" marker-end="url(#arrD)"/>
+<path d="M2015.0,494.0 L2015.0,691.0" fill="none" stroke="#15803D" stroke-width="2.2" marker-end="url(#arr)"/>
+<path d="M2015.0,769.0 L2015.0,861.0" fill="none" stroke="#15803D" stroke-width="2.2" marker-end="url(#arr)"/>
+<path d="M470.0,900.0 L505.0,900.0" fill="none" stroke="#0E7490" stroke-width="2.2" marker-end="url(#arr)"/>
+<path d="M705.0,900.0 L740.0,900.0" fill="none" stroke="#0E7490" stroke-width="2.2" marker-end="url(#arr)"/>
+<path d="M940.0,900.0 L975.0,900.0" fill="none" stroke="#0E7490" stroke-width="2.2" marker-end="url(#arr)"/>
+<path d="M1075.0,861.0 L1075.0,494.0" fill="none" stroke="#0E7490" stroke-width="2.2" marker-end="url(#arr)"/>
+<text x="1085" y="640" text-anchor="start" font-size="13" font-weight="600" fill="#0E7490" paint-order="stroke" stroke="#fff" stroke-width="5">se encuentran en Mensajes</text>
+<path d="M1175.0,900.0 L1445.0,900.0" fill="none" stroke="#0E7490" stroke-width="2.2" marker-end="url(#arr)"/>
+<text x="1310.0" y="890" text-anchor="middle" font-size="13" font-weight="600" fill="#0E7490" paint-order="stroke" stroke="#fff" stroke-width="5">arreglado</text>
+<path d="M1645.0,900.0 L1915.0,900.0" fill="none" stroke="#0E7490" stroke-width="2.2" marker-end="url(#arr)"/>
+<path d="M2115.0,900.0 L2150.0,900.0" fill="none" stroke="#0E7490" stroke-width="2.2" marker-end="url(#arr)"/>
+<rect x="270.0" y="171.0" width="200" height="58" rx="29" fill="#111827"/>
+<text x="370" y="205.6" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">Abre la app</text>
+<rect x="505.0" y="161.0" width="200" height="78" rx="12" fill="#fff" stroke="#111827" stroke-width="2.5"/>
+<text x="605" y="186.2" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">Escribe su número</text>
+<text x="605" y="205.2" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">de celular</text>
+<text x="605" y="224.2" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">(sin Facebook ni Google)</text>
+<rect x="740.0" y="161.0" width="200" height="78" rx="12" fill="#F0FDF4" stroke="#15803D" stroke-width="2.5"/>
+<rect x="750.0" y="152.0" width="34" height="18" rx="5" fill="#15803D"/><text x="767.0" y="165.0" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">APP</text>
+<text x="840" y="195.8" text-anchor="middle" font-size="15" font-weight="500" fill="#111827">La app le manda</text>
+<text x="840" y="214.8" text-anchor="middle" font-size="15" font-weight="500" fill="#111827">un código por SMS</text>
+<rect x="975.0" y="161.0" width="200" height="78" rx="12" fill="#fff" stroke="#111827" stroke-width="2.5"/>
+<text x="1075" y="195.8" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">Confirma su teléfono</text>
+<text x="1075" y="214.8" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">con el código</text>
+<rect x="975.0" y="279.0" width="200" height="78" rx="12" fill="#FFFBEB" stroke="#B45309" stroke-width="2.5" stroke-dasharray="7 5"/>
+<circle cx="1153.0" cy="279.0" r="13" fill="#fff"/><path d="M1143.0,287.0 l10,-17 l10,17 z" fill="#B45309"/><text x="1153.0" y="285.0" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">!</text>
+<text x="1075" y="313.8" text-anchor="middle" font-size="15" font-weight="500" fill="#111827">Código mal: aviso claro,</text>
+<text x="1075" y="332.8" text-anchor="middle" font-size="15" font-weight="500" fill="#111827">lo escrito no se borra</text>
+<polygon points="1310,138 1435,200 1310,262 1185,200" fill="#fff" stroke="#111827" stroke-width="2.5"/>
+<text x="1310" y="195.8" text-anchor="middle" font-size="15" font-weight="700" fill="#111827">¿Busca a alguien</text>
+<text x="1310" y="214.8" text-anchor="middle" font-size="15" font-weight="700" fill="#111827">o busca changas?</text>
+<rect x="270.0" y="416.0" width="200" height="78" rx="12" fill="#fff" stroke="#1D6FE0" stroke-width="2.5"/>
+<text x="370" y="450.8" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">Busca por oficio</text>
+<text x="370" y="469.8" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">y zona del pueblo</text>
+<rect x="505.0" y="416.0" width="200" height="78" rx="12" fill="#fff" stroke="#1D6FE0" stroke-width="2.5"/>
+<text x="605" y="441.2" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">Mira la ficha: estrellas,</text>
+<text x="605" y="460.2" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">vecinos que lo</text>
+<text x="605" y="479.2" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">recomiendan y opiniones</text>
+<rect x="740.0" y="416.0" width="200" height="78" rx="12" fill="#fff" stroke="#1D6FE0" stroke-width="2.5"/>
+<text x="840" y="450.8" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">Contacta</text>
+<text x="840" y="469.8" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">(mensaje ya armado)</text>
+<rect x="975.0" y="416.0" width="200" height="78" rx="12" fill="#fff" stroke="#1D6FE0" stroke-width="2.5"/>
+<text x="1075" y="450.8" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">Arreglan día y precio</text>
+<text x="1075" y="469.8" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">en Mensajes</text>
+<rect x="1210.0" y="416.0" width="200" height="78" rx="12" fill="#fff" stroke="#1D6FE0" stroke-width="2.5"/>
+<text x="1310" y="441.2" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">Acuerdan seña o pago:</text>
+<text x="1310" y="460.2" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">efectivo, Mercado Pago</text>
+<text x="1310" y="479.2" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">o transferencia</text>
+<rect x="1445.0" y="416.0" width="200" height="78" rx="12" fill="#fff" stroke="#1D6FE0" stroke-width="2.5"/>
+<text x="1545" y="450.8" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">Trabajo en curso</text>
+<text x="1545" y="469.8" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">(Mis trabajos)</text>
+<rect x="1680.0" y="416.0" width="200" height="78" rx="12" fill="#fff" stroke="#1D6FE0" stroke-width="2.5"/>
+<text x="1780" y="450.8" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">Marca el trabajo</text>
+<text x="1780" y="469.8" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">como terminado</text>
+<rect x="1915.0" y="416.0" width="200" height="78" rx="12" fill="#fff" stroke="#1D6FE0" stroke-width="2.5"/>
+<text x="2015" y="450.8" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">Deja su opinión</text>
+<text x="2015" y="469.8" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">(estrellas + frases)</text>
+<rect x="2150.0" y="426.0" width="200" height="58" rx="29" fill="#15803D"/>
+<text x="2250" y="460.6" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">Trabajo finalizado</text>
+<rect x="270.0" y="536.0" width="200" height="78" rx="12" fill="#fff" stroke="#1D6FE0" stroke-width="2.5"/>
+<text x="370" y="561.2" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">Pide una changa:</text>
+<text x="370" y="580.2" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">4 pasos, menos</text>
+<text x="370" y="599.2" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">de 1 minuto</text>
+<rect x="505.0" y="536.0" width="200" height="78" rx="12" fill="#FFFBEB" stroke="#B45309" stroke-width="2.5" stroke-dasharray="7 5"/>
+<circle cx="683.0" cy="536.0" r="13" fill="#fff"/><path d="M673.0,544.0 l10,-17 l10,17 z" fill="#B45309"/><text x="683.0" y="542.0" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">!</text>
+<text x="605" y="570.8" text-anchor="middle" font-size="15" font-weight="500" fill="#111827">Sin señal: se guarda</text>
+<text x="605" y="589.8" text-anchor="middle" font-size="15" font-weight="500" fill="#111827">y se publica sola</text>
+<rect x="740.0" y="536.0" width="200" height="78" rx="12" fill="#fff" stroke="#4B5563" stroke-width="2.5" stroke-dasharray="7 5"/>
+<text x="840" y="570.8" text-anchor="middle" font-size="15" font-weight="500" fill="#111827">Avisar de un problema</text>
+<text x="840" y="589.8" text-anchor="middle" font-size="15" font-weight="500" fill="#111827">(desde la ficha)</text>
+<rect x="1445.0" y="536.0" width="200" height="78" rx="12" fill="#FEF2F2" stroke="#991B1B" stroke-width="2.5" stroke-dasharray="7 5"/>
+<circle cx="1623.0" cy="536.0" r="13" fill="#fff"/><path d="M1613.0,544.0 l10,-17 l10,17 z" fill="#991B1B"/><text x="1623.0" y="542.0" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">!</text>
+<text x="1545" y="561.2" text-anchor="middle" font-size="15" font-weight="500" fill="#111827">Cancelar: solo si no</text>
+<text x="1545" y="580.2" text-anchor="middle" font-size="15" font-weight="500" fill="#111827">empezó, y con</text>
+<text x="1545" y="599.2" text-anchor="middle" font-size="15" font-weight="500" fill="#111827">confirmación</text>
+<rect x="505.0" y="691.0" width="200" height="78" rx="12" fill="#F0FDF4" stroke="#15803D" stroke-width="2.5"/>
+<rect x="515.0" y="682.0" width="34" height="18" rx="5" fill="#15803D"/><text x="532.0" y="695.0" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">APP</text>
+<text x="605" y="716.2" text-anchor="middle" font-size="15" font-weight="500" fill="#111827">Avisa la changa a quien</text>
+<text x="605" y="735.2" text-anchor="middle" font-size="15" font-weight="500" fill="#111827">ofrece ese oficio</text>
+<text x="605" y="754.2" text-anchor="middle" font-size="15" font-weight="500" fill="#111827">en esa zona</text>
+<rect x="1210.0" y="691.0" width="200" height="78" rx="12" fill="#F0FDF4" stroke="#15803D" stroke-width="2.5"/>
+<rect x="1220.0" y="682.0" width="34" height="18" rx="5" fill="#15803D"/><text x="1237.0" y="695.0" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">APP</text>
+<text x="1310" y="725.8" text-anchor="middle" font-size="15" font-weight="500" fill="#111827">Procesa el pago</text>
+<text x="1310" y="744.8" text-anchor="middle" font-size="15" font-weight="500" fill="#111827">con Mercado Pago</text>
+<rect x="1445.0" y="691.0" width="200" height="78" rx="12" fill="#FFFBEB" stroke="#B45309" stroke-width="2.5" stroke-dasharray="7 5"/>
+<circle cx="1623.0" cy="691.0" r="13" fill="#fff"/><path d="M1613.0,699.0 l10,-17 l10,17 z" fill="#B45309"/><text x="1623.0" y="697.0" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">!</text>
+<text x="1545" y="725.8" text-anchor="middle" font-size="15" font-weight="500" fill="#111827">Si lo rechaza: aviso,</text>
+<text x="1545" y="744.8" text-anchor="middle" font-size="15" font-weight="500" fill="#111827">el acuerdo no se borra</text>
+<rect x="1915.0" y="691.0" width="200" height="78" rx="12" fill="#F0FDF4" stroke="#15803D" stroke-width="2.5"/>
+<rect x="1925.0" y="682.0" width="34" height="18" rx="5" fill="#15803D"/><text x="1942.0" y="695.0" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">APP</text>
+<text x="2015" y="725.8" text-anchor="middle" font-size="15" font-weight="500" fill="#111827">Suma la opinión</text>
+<text x="2015" y="744.8" text-anchor="middle" font-size="15" font-weight="500" fill="#111827">al perfil</text>
+<rect x="270.0" y="861.0" width="200" height="78" rx="12" fill="#fff" stroke="#0E7490" stroke-width="2.5"/>
+<text x="370" y="895.8" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">Marca</text>
+<text x="370" y="914.8" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">“Disponible hoy”</text>
+<rect x="505.0" y="861.0" width="200" height="78" rx="12" fill="#fff" stroke="#0E7490" stroke-width="2.5"/>
+<text x="605" y="895.8" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">Recibe el aviso</text>
+<text x="605" y="914.8" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">en Mensajes</text>
+<rect x="740.0" y="861.0" width="200" height="78" rx="12" fill="#fff" stroke="#0E7490" stroke-width="2.5"/>
+<text x="840" y="895.8" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">Mira la changa:</text>
+<text x="840" y="914.8" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">qué, cuándo y dónde</text>
+<rect x="975.0" y="861.0" width="200" height="78" rx="12" fill="#fff" stroke="#0E7490" stroke-width="2.5"/>
+<text x="1075" y="895.8" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">Contacta a quien</text>
+<text x="1075" y="914.8" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">la pidió</text>
+<rect x="1445.0" y="861.0" width="200" height="78" rx="12" fill="#fff" stroke="#0E7490" stroke-width="2.5"/>
+<text x="1545" y="905.2" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">Hace el trabajo</text>
+<rect x="1915.0" y="861.0" width="200" height="78" rx="12" fill="#fff" stroke="#0E7490" stroke-width="2.5"/>
+<text x="2015" y="895.8" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">Recibe la opinión:</text>
+<text x="2015" y="914.8" text-anchor="middle" font-size="15" font-weight="600" fill="#111827">suma estrellas</text>
+<rect x="2150.0" y="871.0" width="200" height="58" rx="29" fill="#15803D"/>
+<text x="2250" y="895.6" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">Más vecinos</text>
+<text x="2250" y="915.6" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">lo eligen</text>
+<text x="40" y="1046" font-size="15" font-weight="700" fill="#111827">Referencias:</text>
+<rect x="160" y="1028" width="44" height="24" rx="12" fill="#111827"/>
+<text x="214" y="1045" font-size="15" fill="#111827">Inicio / fin</text>
+<rect x="352.4" y="1028" width="44" height="24" rx="6" fill="#fff" stroke="#1D6FE0" stroke-width="2"/>
+<text x="406.4" y="1045" font-size="15" fill="#111827">Lo que hace la persona</text>
+<rect x="626.8" y="1028" width="44" height="24" rx="6" fill="#F0FDF4" stroke="#15803D" stroke-width="2"/>
+<text x="680.8" y="1045" font-size="15" fill="#111827">Lo que hace la app</text>
+<polygon points="890.4,1026 912.4,1040 890.4,1054 868.4,1040" fill="#fff" stroke="#111827" stroke-width="2"/>
+<text x="922.4" y="1045" font-size="15" fill="#111827">Decisión</text>
+<rect x="1028.0" y="1028" width="44" height="24" rx="6" fill="#FFFBEB" stroke="#B45309" stroke-width="2" stroke-dasharray="5 4"/>
+<text x="1082.0" y="1045" font-size="15" fill="#111827">Error que no borra datos</text>
+<rect x="1318.8" y="1028" width="44" height="24" rx="6" fill="#FEF2F2" stroke="#991B1B" stroke-width="2" stroke-dasharray="5 4"/>
+<text x="1372.8" y="1045" font-size="15" fill="#111827">Acción que no se deshace</text>
+<text x="2380" y="1045" text-anchor="end" font-size="14" fill="#4B5563">Línea punteada = camino alternativo o de error</text>
+</svg>
