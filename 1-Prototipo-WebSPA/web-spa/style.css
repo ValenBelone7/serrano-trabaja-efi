@@ -96,7 +96,20 @@
   box-shadow: 0 1px 3px rgba(29, 111, 224, 0.3);
 }
 
-/* Estado Focus: Anillo visible de alto contraste (cyan) separado del borde */
+/* Quitar recuadro negro por defecto en foco programático al cambiar de vista */
+h1:focus:not(:focus-visible),
+h2:focus:not(:focus-visible),
+h3:focus:not(:focus-visible),
+[tabindex="-1"]:focus:not(:focus-visible) {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Estado Focus: Anillo visible de alto contraste (cyan) solo con teclado (:focus-visible) */
+h1:focus-visible,
+h2:focus-visible,
+h3:focus-visible,
+[tabindex="-1"]:focus-visible,
 .btn-primary:focus-visible,
 .btn:focus-visible,
 button:focus-visible,
@@ -107,6 +120,10 @@ textarea:focus-visible {
   box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 6px var(--color-focus-ring) !important;
 }
 
+.dark h1:focus-visible,
+.dark h2:focus-visible,
+.dark h3:focus-visible,
+.dark [tabindex="-1"]:focus-visible,
 .dark .btn-primary:focus-visible,
 .dark .btn:focus-visible,
 .dark button:focus-visible,
@@ -116,18 +133,17 @@ textarea:focus-visible {
   box-shadow: 0 0 0 2px #020617, 0 0 0 6px var(--color-focus-ring) !important;
 }
 
-/* Estado Disabled: Plano, gris, sin sombra ni interactividad */
+/* Estado Disabled: Plano, gris, sin sombra ni interactividad (B7) */
 .btn:disabled,
 .btn-primary:disabled,
 .btn-secondary:disabled {
   background-color: #D1D5DB !important;
   border-color: #9CA3AF !important;
   border-bottom-width: 2px !important;
-  color: #4B5563 !important;
+  color: #6B7280 !important;
   box-shadow: none !important;
   transform: none !important;
   cursor: not-allowed !important;
-  opacity: 0.85;
 }
 
 .dark .btn:disabled,
@@ -137,6 +153,9 @@ textarea:focus-visible {
   border-color: #475569 !important;
   border-bottom-width: 2px !important;
   color: #94A3B8 !important;
+  box-shadow: none !important;
+  transform: none !important;
+  cursor: not-allowed !important;
 }
 
 /* Botón Secundario (Borde, fondo limpio con relieve sutil) */

@@ -6,6 +6,9 @@
   <title>Serrano Trabaja — Trabajo y ayuda entre vecinos</title>
   <meta name="description" content="Plataforma comunitaria de changas y oficios en Serrano, Córdoba. Encontrá a alguien de confianza o conseguí trabajo cerca de tu casa.">
 
+  <!-- Favicon oficial -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
   <!-- Tipografía Inter (Google Fonts) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -50,13 +53,13 @@
 <body class="bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-50 font-sans text-[18px] leading-relaxed transition-colors duration-200 antialiased min-h-screen flex flex-col selection:bg-blue-200 dark:selection:bg-blue-900">
 
   <!-- Salto accesible al contenido principal -->
-  <a href="#contenido-principal" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-3 focus:bg-serrano-blue focus:text-white focus:rounded-md focus:shadow-lg focus:outline-none focus:ring-4 focus:ring-cyan-400 font-bold">
+  <a href="#contenido-principal" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-3 focus:bg-serrano-blue focus:text-white force-text-white focus:rounded-md focus:shadow-lg focus:outline-none focus:ring-4 focus:ring-cyan-400 font-bold">
     Saltar al contenido principal
   </a>
 
   <!-- Encabezado / Navbar Superior (Fija) -->
   <header class="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b-2 border-slate-200 dark:border-slate-800 transition-colors">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-18 sm:h-20 flex items-center justify-between">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
       
       <!-- Marca / Logo -->
       <a href="#buscar" class="flex items-center gap-3 group focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500 rounded-lg p-1.5" aria-label="Serrano Trabaja - Ir al inicio">
@@ -68,35 +71,35 @@
           </svg>
         </span>
         <div class="flex flex-col">
-          <span class="font-bold text-[20px] sm:text-[22px] tracking-tight leading-none text-slate-900 dark:text-white">
+          <span class="font-bold text-[24px] tracking-tight leading-none text-slate-900 dark:text-white">
             SERRANO <span class="font-semibold text-serrano-blue dark:text-blue-400">TRABAJA</span>
           </span>
-          <span class="text-[12px] sm:text-[13px] font-medium text-slate-500 dark:text-slate-400 tracking-wide">Pueblo de Serrano · Cba</span>
+          <span class="text-[14px] font-medium text-slate-500 dark:text-slate-400 tracking-wide">Pueblo de Serrano · Cba</span>
         </div>
       </a>
 
       <!-- Navegación de Escritorio (≥ 1024px) -->
       <nav class="hidden lg:flex items-center gap-1.5" aria-label="Navegación principal de escritorio" id="nav-desktop">
-        <a href="#buscar" data-nav="buscar" class="nav-item-desktop px-4 py-3 rounded-lg font-semibold text-[17px] text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500 transition-colors">
+        <a href="#buscar" data-nav="buscar" class="nav-item-desktop px-4 py-3 rounded-lg font-semibold text-[18px] text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500 transition-colors">
           Buscar
         </a>
-        <a href="#mis-trabajos" data-nav="mis-trabajos" class="nav-item-desktop px-4 py-3 rounded-lg font-semibold text-[17px] text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500 transition-colors">
+        <a href="#mis-trabajos" data-nav="mis-trabajos" class="nav-item-desktop px-4 py-3 rounded-lg font-semibold text-[18px] text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500 transition-colors">
           Mis trabajos
         </a>
-        <a href="#pagos" data-nav="pagos" class="nav-item-desktop px-4 py-3 rounded-lg font-semibold text-[17px] text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500 transition-colors">
+        <a href="#pagos" data-nav="pagos" class="nav-item-desktop px-4 py-3 rounded-lg font-semibold text-[18px] text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500 transition-colors">
           Pagos
         </a>
-        <a href="#mensajes" data-nav="mensajes" class="nav-item-desktop px-4 py-3 rounded-lg font-semibold text-[17px] text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500 transition-colors">
+        <a href="#mensajes" data-nav="mensajes" class="nav-item-desktop px-4 py-3 rounded-lg font-semibold text-[18px] text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500 transition-colors">
           Mensajes
         </a>
-        <a href="#mi-perfil" data-nav="mi-perfil" class="nav-item-desktop px-4 py-3 rounded-lg font-semibold text-[17px] text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500 transition-colors">
+        <a href="#mi-perfil" data-nav="mi-perfil" class="nav-item-desktop px-4 py-3 rounded-lg font-semibold text-[18px] text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500 transition-colors">
           Mi perfil
         </a>
       </nav>
 
       <!-- Botón Selector de Tema Claro / Oscuro -->
       <div class="flex items-center gap-2">
-        <button id="btn-toggle-tema" type="button" class="btn-theme-toggle min-h-[56px] min-w-[56px] px-3.5 py-2.5 rounded-xl border-2 border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-100 font-semibold text-[16px] flex items-center gap-2.5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500 transition-all cursor-pointer" aria-label="Cambiar tema de color" title="Alternar entre modo claro y oscuro">
+        <button id="btn-toggle-tema" type="button" class="btn-theme-toggle min-h-[56px] min-w-[56px] px-3.5 py-2.5 rounded-xl border-2 border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-100 font-semibold text-[18px] flex items-center gap-2.5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500 transition-all cursor-pointer" aria-label="Cambiar tema de color" title="Alternar entre modo claro y oscuro">
           <!-- Ícono SVG Sol (Modo Claro activo -> cambiar a oscuro) -->
           <svg id="icon-sol" class="w-6 h-6 text-amber-500 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <circle cx="12" cy="12" r="5"></circle>
@@ -113,7 +116,7 @@
           <svg id="icon-luna" class="w-6 h-6 text-blue-400 hidden flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
           </svg>
-          <span id="texto-tema" class="hidden sm:inline font-semibold text-[15px]">Modo oscuro</span>
+          <span id="texto-tema" class="hidden sm:inline font-semibold text-[18px]">Modo oscuro</span>
         </button>
       </div>
 
@@ -121,7 +124,7 @@
   </header>
 
   <!-- Banner de Estado de Conectividad (Sin Señal) -->
-  <aside id="banner-sin-senal" class="hidden bg-amber-500 text-slate-950 px-4 py-3 font-semibold text-[16px] border-b-2 border-amber-600 shadow-sm" role="status" aria-live="polite">
+  <aside id="banner-sin-senal" class="hidden bg-amber-500 text-slate-950 px-4 py-3 font-semibold text-[18px] border-b-2 border-amber-600 shadow-sm" role="status" aria-live="polite">
     <div class="max-w-6xl mx-auto flex items-center justify-between gap-3">
       <div class="flex items-center gap-2.5">
         <!-- Ícono Antena tachada SVG -->
@@ -136,7 +139,7 @@
         </svg>
         <span><strong>Sin señal en el celular.</strong> Podés seguir usando la app: lo que hagas se guarda y se publica solo cuando vuelva la señal.</span>
       </div>
-      <button type="button" id="btn-cerrar-banner-red" class="min-h-[44px] min-w-[44px] p-2 hover:bg-amber-600 rounded-lg text-slate-950 font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black" aria-label="Cerrar aviso de conexión">✕</button>
+      <button type="button" id="btn-cerrar-banner-red" class="min-h-[56px] min-w-[56px] p-2 hover:bg-amber-600 rounded-lg text-slate-950 font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black flex items-center justify-center cursor-pointer" aria-label="Cerrar aviso de conexión">✕</button>
     </div>
   </aside>
 
@@ -147,51 +150,51 @@
   </main>
 
   <!-- Barra de Navegación Inferior Fija para Móvil (< 1024px, 5 Pestañas Obligatorias) -->
-  <nav class="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/98 dark:bg-slate-900/98 backdrop-blur-md border-t-2 border-slate-300 dark:border-slate-800 shadow-[0_-4px_16px_rgba(0,0,0,0.08)] transition-colors" aria-label="Navegación inferior móvil" id="nav-mobile">
+  <nav class="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white dark:bg-slate-900 border-t-2 border-slate-300 dark:border-slate-800 shadow-[0_-4px_16px_rgba(0,0,0,0.08)] transition-colors" aria-label="Navegación inferior móvil" id="nav-mobile">
     <div class="max-w-md mx-auto grid grid-cols-5 h-[72px]">
       
       <!-- Pestaña 1: Buscar -->
-      <a href="#buscar" data-nav="buscar" class="nav-tab-mobile flex flex-col items-center justify-center min-h-[56px] text-slate-600 dark:text-slate-400 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500 rounded-lg group transition-colors">
+      <a href="#buscar" data-nav="buscar" class="nav-tab-mobile flex flex-col items-center justify-center min-h-[56px] w-full px-0.5 text-slate-600 dark:text-slate-400 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500 rounded-lg group transition-colors">
         <svg class="w-6 h-6 mb-1 transition-transform group-hover:scale-110" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <circle cx="11" cy="11" r="8"></circle>
           <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
         </svg>
-        <span class="text-[13px] font-semibold leading-none tracking-tight">Buscar</span>
+        <span class="text-[14px] font-semibold leading-none tracking-tight whitespace-nowrap">Buscar</span>
       </a>
 
       <!-- Pestaña 2: Mis trabajos -->
-      <a href="#mis-trabajos" data-nav="mis-trabajos" class="nav-tab-mobile flex flex-col items-center justify-center min-h-[56px] text-slate-600 dark:text-slate-400 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500 rounded-lg group transition-colors">
+      <a href="#mis-trabajos" data-nav="mis-trabajos" class="nav-tab-mobile flex flex-col items-center justify-center min-h-[56px] w-full px-0.5 text-slate-600 dark:text-slate-400 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500 rounded-lg group transition-colors">
         <svg class="w-6 h-6 mb-1 transition-transform group-hover:scale-110" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
           <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
         </svg>
-        <span class="text-[13px] font-semibold leading-none tracking-tight">Mis trabajos</span>
+        <span class="text-[14px] font-semibold leading-none tracking-tight whitespace-nowrap">Mis trabajos</span>
       </a>
 
       <!-- Pestaña 3: Pagos -->
-      <a href="#pagos" data-nav="pagos" class="nav-tab-mobile flex flex-col items-center justify-center min-h-[56px] text-slate-600 dark:text-slate-400 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500 rounded-lg group transition-colors">
+      <a href="#pagos" data-nav="pagos" class="nav-tab-mobile flex flex-col items-center justify-center min-h-[56px] w-full px-0.5 text-slate-600 dark:text-slate-400 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500 rounded-lg group transition-colors">
         <svg class="w-6 h-6 mb-1 transition-transform group-hover:scale-110" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
           <line x1="1" y1="10" x2="23" y2="10"></line>
         </svg>
-        <span class="text-[13px] font-semibold leading-none tracking-tight">Pagos</span>
+        <span class="text-[14px] font-semibold leading-none tracking-tight whitespace-nowrap">Pagos</span>
       </a>
 
       <!-- Pestaña 4: Mensajes -->
-      <a href="#mensajes" data-nav="mensajes" class="nav-tab-mobile flex flex-col items-center justify-center min-h-[56px] text-slate-600 dark:text-slate-400 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500 rounded-lg group transition-colors">
+      <a href="#mensajes" data-nav="mensajes" class="nav-tab-mobile flex flex-col items-center justify-center min-h-[56px] w-full px-0.5 text-slate-600 dark:text-slate-400 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500 rounded-lg group transition-colors">
         <svg class="w-6 h-6 mb-1 transition-transform group-hover:scale-110" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
         </svg>
-        <span class="text-[13px] font-semibold leading-none tracking-tight">Mensajes</span>
+        <span class="text-[14px] font-semibold leading-none tracking-tight whitespace-nowrap">Mensajes</span>
       </a>
 
       <!-- Pestaña 5: Mi perfil -->
-      <a href="#mi-perfil" data-nav="mi-perfil" class="nav-tab-mobile flex flex-col items-center justify-center min-h-[56px] text-slate-600 dark:text-slate-400 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500 rounded-lg group transition-colors">
+      <a href="#mi-perfil" data-nav="mi-perfil" class="nav-tab-mobile flex flex-col items-center justify-center min-h-[56px] w-full px-0.5 text-slate-600 dark:text-slate-400 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500 rounded-lg group transition-colors">
         <svg class="w-6 h-6 mb-1 transition-transform group-hover:scale-110" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
           <circle cx="12" cy="7" r="4"></circle>
         </svg>
-        <span class="text-[13px] font-semibold leading-none tracking-tight">Mi perfil</span>
+        <span class="text-[14px] font-semibold leading-none tracking-tight whitespace-nowrap">Mi perfil</span>
       </a>
 
     </div>
@@ -206,14 +209,14 @@
         <div id="modal-icono" class="w-14 h-14 rounded-2xl bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 flex items-center justify-center flex-shrink-0 shadow-inner">
           <!-- Ícono dinámico -->
         </div>
-        <button type="button" id="modal-btn-cerrar-x" class="min-h-[56px] min-w-[56px] rounded-xl flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white font-bold text-[22px] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500 cursor-pointer" aria-label="Cerrar ventana">
+        <button type="button" id="modal-btn-cerrar-x" class="min-h-[56px] min-w-[56px] rounded-xl flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white font-bold text-[24px] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500 cursor-pointer" aria-label="Cerrar ventana">
           ✕
         </button>
       </div>
 
       <!-- Contenido Textual -->
       <div class="flex flex-col gap-2">
-        <h2 id="modal-titulo" class="text-[24px] sm:text-[28px] font-bold text-slate-900 dark:text-white leading-tight"></h2>
+        <h2 id="modal-titulo" class="text-[24px] font-bold text-slate-900 dark:text-white leading-tight"></h2>
         <p id="modal-descripcion" class="text-[18px] text-slate-700 dark:text-slate-300"></p>
       </div>
 
@@ -226,7 +229,8 @@
   </div>
 
   <!-- Toast de Notificación Rápida -->
-  <div id="toast-notificacion" class="fixed bottom-24 lg:bottom-6 right-4 z-50 hidden bg-slate-900 text-white dark:bg-white dark:text-slate-900 px-5 py-3.5 rounded-xl shadow-xl border border-slate-700 dark:border-slate-300 flex items-center gap-3 font-semibold text-[17px] transition-all" role="status" aria-live="polite">
+  <div id="toast-notificacion" class="fixed bottom-24 lg:bottom-6 right-4 z-50 hidden bg-slate-900 text-white dark:bg-white dark:text-slate-900 px-5 py-3.5 rounded-xl shadow-xl border border-slate-700 dark:border-slate-300 flex items-center gap-3 font-semibold text-[18px] transition-all" role="status" aria-live="polite">
+    <span id="toast-icono" class="flex-shrink-0" aria-hidden="true"></span>
     <span id="toast-texto"></span>
   </div>
 

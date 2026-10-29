@@ -33,3 +33,15 @@
 | **Botón cubierto por la barra** | En móviles, la barra inferior fija de 72px puede tapar botones o contenidos al pie. | Aplicar `padding-bottom: 96px` (`pb-24`) al `<main>` para garantizar visibilidad y separación. |
 | **Pérdida de datos por desconexión** | Si se corta la señal o se recarga la pestaña, el formulario se vacía. | Escuchar eventos `input` en el formulario y sincronizar inmediatamente con `localStorage.setItem('serrano_borrador', ...)`. |
 | **Error que borra campos** | Al fallar una validación, el input se limpia forzando a escribir de nuevo. | El feedback de error agrega borde rojo e ícono, pero **nunca vacía el valor del input**. |
+
+---
+
+## 4. Gotchas Detectados en la Versión 1 y Prevención (v2)
+
+| Gotcha / Problema | Riesgo UX | Solución Técnica Obligatoria |
+|---|---|---|
+| **Dispersión de tamaños tipográficos** | Se usaron 15 tamaños en v1 (11 a 36px), rompiendo la escala y reduciendo legibilidad para baja visión. | Restringir estrictamente a los 4 tamaños: **32px** (H1), **24px** (H2/secciones), **18px** (body, botones, inputs, errores) y **14px** (fechas, tags y barra inferior). Instrucciones y errores siempre en ≥ 18px. |
+| **Emojis en avisos y toasts** | Emojis (`⚠️`, `✓`) en cadenas de texto renderizan distinto o se rompen en celulares viejos y lucen poco profesionales. | Prohibir emojis en el código y la interfaz; usar exclusivamente íconos SVG inline con trazo de 2px. |
+| **Pestañas secundarias inactivas** | Las pestañas "Changas" (Buscar) y "Lo que hago" (Mis trabajos) sólo mostraban un toast sin cambiar datos ni actualizar `aria-selected`. | Renderizar contenido real de tarjetas de changas y trabajos postulados, sincronizando `aria-selected` y el check visual. |
+| **Clases inexistentes en Tailwind v3** | Clases como `w-18`, `h-18` o `sm:h-18` no existen en Tailwind v3 y colapsaban avatares o encabezados. | Emplear clases oficiales (`w-20 h-20`) o valores arbitrarios válidos (`h-[72px]`). |
+

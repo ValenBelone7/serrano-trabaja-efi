@@ -92,3 +92,50 @@
 - **Contexto**: Se requería la implementación viva y navegable de los wireframes low-fi (`10-Buscar`, `11-Ficha-trabajador`, `21-Pedir-changa`, `20-Mis-trabajos`), respetando el sistema de diseño, los 5 estados, WCAG AA y la persistencia local.
 - **Decisión**: Implementar la SPA mediante `index.html` (semántica HTML5 y estructura dual de navegación), `style.css` (tokens de relieve mecánico de 5px/2px, variantes de alto contraste y clases de utilidad) y `app.js` (router por hash, catálogo de 6 trabajadores, persistencia en `localStorage`, detección offline y modal con focus trap).
 - **Consecuencia**: Aplicación 100% operativa en navegador, sin dependencias externas, navegable con teclado y fiel a las decisiones comunitarias de Serrano Trabaja.
+
+---
+
+### [ADR-014] · [2026-10-29 11:18] — Barra inferior fija de 5 pestañas en lugar de menú hamburguesa
+- **Contexto**: El usuario límite (adulto mayor, trabajador rural, sin hábito de exploración en interfaces complejas) no encuentra opciones ocultas en menús hamburguesa ("tres rayitas").
+- **Decisión**: Utilizar en dispositivos móviles una barra inferior fija permanente de 72px de alto con 5 pestañas siempre visibles (`Buscar`, `Mis trabajos`, `Pagos`, `Mensajes`, `Mi perfil`), acompañadas de ícono SVG y texto descriptivo en 14px. En escritorio (≥ 1024px) se ubica en el header superior horizontal.
+- **Consecuencia**: Reconocimiento visual directo sin carga cognitiva de memorización ni pasos ocultos; navegación accesible con una sola mano en pantallas táctiles.
+
+---
+
+### [ADR-015] · [2026-10-29 11:18] — Modo claro por defecto con modo oscuro persistente opcional
+- **Contexto**: El uso primordial de la aplicación ocurre bajo sol pleno en zonas rurales serranas (obras, calles, quintas). Los modos oscuros sufren deslumbramiento y reflejos severos en pantallas de celulares bajo luz solar directa.
+- **Decisión**: La aplicación iniciará **siempre en modo claro por defecto**, descartando `prefers-color-scheme` si el usuario no eligió explícitamente el modo oscuro. El modo oscuro solo se activará mediante el botón manual en el encabezado y persistirá bajo la clave `serrano_tema` en `localStorage`.
+- **Consecuencia**: Máxima legibilidad inmediata para el usuario rural sin obligarlo a configurar nada; respeta la elección personal si la guarda voluntariamente.
+
+---
+
+### [ADR-016] · [2026-10-29 11:18] — Botón disabled en gris plano sin opacidad ni sombra
+- **Contexto**: En la v1 el botón deshabilitado utilizaba `opacity: .85` con texto `#4B5563`, lo que generaba un contraste difuso y confuso con botones activos secundarios. El UI Kit especifica una convención clara de inactividad física.
+- **Decisión**: El estado *disabled* se implementa con fondo gris sólido `#D1D5DB`, texto `#6B7280`, borde comprimido plano (2px), sin sombra (`box-shadow: none`), sin elevación, sin `opacity` y con cursor `not-allowed`, siempre acompañado de microcopy explicativo de faltantes en ≥ 18px.
+- **Consecuencia**: Affordance mecánico inequívoco: el botón se percibe plano y desactivado, evitando pulsaciones frustrantes.
+
+---
+
+### [ADR-017] · [2026-10-29 16:10] — Validación multi-campo en formulario de changas sin preselección de chips
+- **Contexto**: En la v1 los chips de selección venían preelegidos por defecto ("Changa", "Limpieza", "Hoy", "Zona Norte"), exigiendo únicamente completar el textarea. Esto impedía que el usuario hiciera elecciones reflexivas y vulneraba el requerimiento de validar al menos 3 campos explícitos.
+- **Decisión**: Los cuatro grupos de chips (`tipoTrabajo`, `oficio`, `cuando`, `donde`) arrancan sin preselección (`''`). El botón "Publicar pedido" permanece deshabilitado hasta completar los 5 campos obligatorios (los 4 chips + descripción con mínimo 10 letras), exhibiendo un microcopy reactivo en 18px con ícono SVG que detalla con precisión los campos faltantes.
+- **Consecuencia**: Alta calidad en los datos comunitarios publicados, prevención de errores por desatención y cumplimiento riguroso de la rúbrica de evaluación.
+
+---
+
+### [ADR-018] · [2026-10-29 16:10] — Activación funcional de pestañas secundarias "Changas" y "Lo que hago"
+- **Contexto**: En la v1, hacer clic en "Changas" (Buscar) o "Lo que hago" (Mis trabajos) emitía un simple toast sin alternar el contenido ni actualizar los atributos `aria-selected` de accesibilidad.
+- **Decisión**: Se implementa el renderizado completo de ambas vistas secundarias:
+  1. En **Buscar › Changas**, se muestra el catálogo de changas vecinales filtradas por oficio y zona, con contador fidedigno ("N changas") y el bloque/botón accesible *"Avisame si hay changas nuevas"* (spec §6.7).
+  2. En **Mis trabajos › Lo que hago**, se exhiben las tarjetas de trabajos en los que el usuario se postuló o fue asignado como trabajador, con estados visuales no cromáticos.
+  Ambas vistas mantienen la consistencia de los wireframes 10 y 20 y resuelven el detalle de tarjeta mediante aviso accesible sin inventar pantallas fuera de alcance.
+- **Consecuencia**: Experiencia simétrica y completa tanto para quien pide ayuda como para quien ofrece mano de obra en Serrano.
+
+---
+
+### [ADR-019] · [2026-10-29 16:10] — Sincronización y publicación reactiva de pedidos guardados sin señal al reconectar
+- **Contexto**: En zonas rurales con conectividad intermitente, los pedidos guardados sin señal (`offline`) permanecían en estado pendiente indefinidamente en `localStorage`, requiriendo intervención manual o quedando estancados a pesar de lo estipulado en ADR-007.
+- **Decisión**: Al guardar sin señal, el pedido se almacena con estado *"Guardado · Falta publicar"* (ícono "..."). Al dispararse el evento nativo `online` del navegador, el sistema procesa reactivamente los pedidos pendientes en `localStorage`, los promueve a *"Esperando que te escriban"*, emite un toast de confirmación (*"Tu pedido ya se publicó. Volvió la señal a Serrano."*) y re-renderiza la vista si el usuario se encuentra en `Mis trabajos`.
+- **Consecuencia**: Continuidad operativa resiliente y transparente para el usuario en condiciones de baja conectividad.
+
+
