@@ -16,6 +16,6 @@ La presentación tiene 20 diapositivas en tres partes:
 | | |
 |---|---|
 | **Web SPA** | [https://valenbelone7.github.io/serrano-trabaja-efi/](https://valenbelone7.github.io/serrano-trabaja-efi/) |
-| **Prototipo navegable en Figma** | [Abrir el prototipo](https://www.figma.com/proto/uOYgW0ScLaP8cp4Wmuth8n/Serrano-Trabaja---Prototipo-EFI?node-id=3-3&p=f&t=UXTqK97816BF5O1T-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=3%3A3) |
+| **Prototipo navegable en Figma** | [Abrir el prototipo](https://www.figma.com/proto/uOYgW0ScLaP8cp4Wmuth8n/Serrano-Trabaja---Prototipo-EFI?node-id=31-10401&p=f&t=I8VNkGmGMSJHftfB-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=31%3A10401&show-proto-sidebar=1) |
 | **Wireframe en Figma** | [Abrir el archivo](https://www.figma.com/design/uOYgW0ScLaP8cp4Wmuth8n/Serrano-Trabaja---Prototipo-EFI?node-id=0-1&t=colHn7zReRDBS3I3-1) |
 | **Conceptos de cada clase** | [Matriz de conceptos](../2-Documento-Investigacion/EFI_Matriz_conceptos_Serrano_Trabaja.md) |
