@@ -14,7 +14,7 @@
 | [`web-spa/docs/insumos/`](web-spa/docs/insumos/) | Lo que le damos al agente: [documento de investigación](web-spa/docs/insumos/00-documento-investigacion.md) (para armar el contexto), [respuestas a la entrevista de 14 preguntas](web-spa/docs/insumos/01-respuestas-entrevista-14P.md), [especificación completa](web-spa/docs/insumos/02-especificacion-serrano-trabaja.md), [alcance y checklist](web-spa/docs/insumos/03-alcance-y-checklist.md), sitemap, user flow y las 21 pantallas del wireframe de Figma. |
 | `web-spa/docs/contexto/` · `web-spa/.agents/` · `REPORTE_VERIFICACION_SDD.md` | Los genera Antigravity durante el seminario. |
 | [`PASO_A_PASO_SEMINARIO.md`](PASO_A_PASO_SEMINARIO.md) | Qué hacer en cada clase del seminario con nuestros insumos. |
-| [Wireframe de Figma (Reto 7)](../2-Documento-Investigacion/Anexos/Reto7_Wireframes_Figma/) | Las 21 pantallas del flujo completo en baja fidelidad, navegables en Figma. Muestra las secciones que la SPA todavía no tiene en código (Ingreso, Pagos, Mensajes, Mi perfil, Opinión). |
+| [Wireframe de Figma (Reto 7)](../2-Documento-Investigacion/Anexos/Reto7_Wireframes_Figma/) | Las 21 pantallas del flujo completo en baja fidelidad, navegables en Figma. La Web SPA implementa todas. |
 
 ## Probar la Web SPA en la compu
 

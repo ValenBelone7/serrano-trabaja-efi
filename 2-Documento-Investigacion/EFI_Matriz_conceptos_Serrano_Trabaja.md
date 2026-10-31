@@ -4,7 +4,7 @@
 
 La Parte 1 de la EFI pide *"enumerar los conceptos vistos durante el cursado y detallar cómo se implementaron en el proyecto"*. Cada fila indica dónde mirarlo, para sacar la captura de pantalla que acompaña la descripción:
 
-- **SPA** = la Web SPA (Buscar, Ficha del trabajador, Pedir una changa y Mis trabajos).
+- **SPA** = la Web SPA, con la app completa: ingreso, Buscar, ficha, changas, Mis trabajos (detalle, cancelar y opinión), Pagos, Mensajes y Mi perfil.
 - **Figma** = el wireframe low-fi navegable en Figma, con 21 pantallas ([`Anexos/Reto7_Wireframes_Figma/v2-actual/`](Anexos/Reto7_Wireframes_Figma/v2-actual/)). El número es el nombre del frame.
 - **UI Kit** = el documento del Reto 5 ([`Anexos/Reto5_UI_Kit/`](Anexos/Reto5_UI_Kit/Reto5_UI_Kit_Serrano_Trabaja.md)).
 
@@ -93,7 +93,7 @@ Las capturas ya sacadas están en la sección 6 del [documento de investigación
 | Concepto | Cómo se aplicó | Dónde verlo |
 |---|---|---|
 | **Wireframe de baja fidelidad** | 21 pantallas en grises, sin colores ni fotos, con el flujo completo (v2), más la v1 de antes del Card Sorting y los primeros bocetos. | Figma · `Anexos/Reto1-2_Usabilidad_A11y/bocetos/` |
-| **Prototipo interactivo** | El wireframe de Figma es navegable de punta a punta (21 pantallas conectadas) y la Web SPA lleva a código las 4 pantallas centrales. | Figma (modo presentación) · SPA |
+| **Prototipo interactivo** | El wireframe de Figma es navegable de punta a punta (21 pantallas conectadas) y la Web SPA lleva a código todo ese flujo. | Figma (modo presentación) · SPA |
 | **Trigger / Action / Back** | On click → Navigate to entre pantallas; "← Volver" usa Back; cada pestaña de la barra inferior lleva a su sección. | Figma · SPA |
 | **Componentes e instancias** | Un mismo componente por elemento (botón, chip, card, aviso), reutilizado en todas las pantallas. | SPA · UI Kit |
 | **Variantes** | Botón: Default / Hover / Active / Focus / Disabled; Chip: elegido / sin elegir; Aviso: éxito / error / advertencia / info. | UI Kit · SPA |

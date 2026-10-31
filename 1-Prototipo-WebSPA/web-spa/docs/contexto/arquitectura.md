@@ -24,13 +24,28 @@ La aplicación conmuta vistas dinámicamente mediante el evento `hashchange` sin
 
 | Ruta Hash | Vista / Función | Frame de Figma de Referencia |
 |---|---|---|
-| `#buscar` | Vista inicial · Catálogo, filtros y CTA | `10-Buscar.png` |
-| `#trabajador/:id` | Ficha detallada con confianza y opiniones | `11-Ficha-trabajador.png` |
-| `#pedir` | Formulario en chips + modal accesible | `21-Pedir-changa.png` |
-| `#mis-trabajos` | Historial de changas pedidas en el celular | `20-Mis-trabajos.png` |
-| `#pagos` | Resumen de seña y saldo (Etapa 1: Placeholder) | `30-Pagos.png` |
-| `#mensajes` | Conversaciones y avisos (Etapa 1: Placeholder) | `40-Mensajes.png` |
-| `#mi-perfil` | Disponibilidad y datos (Etapa 1: Placeholder) | `50-Mi-perfil.png` |
+| `#crear-cuenta` · `#entrar` | Ingreso solo con el número de celular | `01-Crear-cuenta.png` · `01-Entrar.png` |
+| `#confirmar` | Código SMS de 4 números (con su error: el código no se borra) | `02-Confirmar-telefono.png` · `02-Error.png` |
+| `#que-busco` | ¿Buscás a alguien o buscás changas? | `03-Que-busco.png` |
+| `#buscar` | Catálogo, filtros, pestañas Trabajadores / Changas | `10-Buscar.png` |
+| `#trabajador/:id` | Ficha con confianza, opiniones y Contactar | `11-Ficha-trabajador.png` |
+| `#changa/:id` | Detalle de una changa pedida | `12-Changa-pedida.png` |
+| `#pedir` | Pedir una changa (chips, "Falta: …") | `21-Pedir-changa.png` |
+| `#sin-senal/:id` | Pedido guardado sin señal, se publica solo | `22-Sin-señal.png` |
+| `#mis-trabajos` | Lo que pedí / Lo que hago | `20-Mis-trabajos.png` |
+| `#trabajo/:id` | Detalle con paso a paso (empezar, terminar) | `23-Trabajo.png` |
+| `#cancelar/:id` | Confirmación de cancelación | `24-Cancelar.png` |
+| `#opinion/:id` | Estrellas y comentario → "Trabajo finalizado" | `25-Opinion.png` |
+| `#pagos` | Resumen y acuerdos de pago | `30-Pagos.png` |
+| `#acordar-pago/:id` | Seña o total, forma de pago, pago con Mercado Pago (simulado) | `31-Acordar-pago.png` |
+| `#pago-rechazado/:id` | Pago rechazado: el acuerdo no se borra | `31-Rechazado.png` |
+| `#mensajes` | Avisos de changas y conversaciones | `40-Mensajes.png` |
+| `#conversacion/:id` | Mensajes con un vecino (pendientes sin señal) | `41-Conversacion.png` |
+| `#mi-perfil` | Disponibilidad, estrellas, recomendaciones, Más | `50-Mi-perfil.png` |
+| `#editar-perfil` | Foto, nombre, oficios, zona y experiencia | `51-Editar-perfil.png` |
+| `#cambiar-telefono` | Confirmar mi teléfono (nuevo número) | `01-Entrar.png` (variante) |
+
+*Sin sesión guardada, cualquier ruta lleva a `#crear-cuenta` (o a `#entrar` si ya hubo una cuenta en ese celular). Las rutas del ingreso ocultan la barra de navegación.*
 
 *Al cambiar de ruta: el foco viaja automáticamente al `<h1>` de la nueva vista y el scroll se reinicia al tope (`scrollTop = 0`).*
 

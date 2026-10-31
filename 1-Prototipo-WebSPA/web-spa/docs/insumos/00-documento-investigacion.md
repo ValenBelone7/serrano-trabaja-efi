@@ -91,7 +91,7 @@ Seguimos el bucle de Diseño Centrado en el Usuario de la Clase 6: **entender �
 | Organizar el contenido | **Card Sorting abierto** con 5 vecinos (21 al 26/09/2026): 24 tarjetas agrupadas en 6 categorías, con matriz de acuerdo. | [Card Sorting + Sitemap](../../../../2-Documento-Investigacion/Anexos/Reto6_Card_Sorting/) |
 | Flujo | User Flow con el camino principal y los caminos de error. | [User Flow](../../../../2-Documento-Investigacion/Anexos/User_Flow/Serrano_Trabaja_UserFlow.png) |
 | Sistema visual | **UI Kit:** paleta con contraste verificado, escala tipográfica y componentes con sus estados. | [UI Kit](../../../../2-Documento-Investigacion/Anexos/Reto5_UI_Kit/Reto5_UI_Kit_Serrano_Trabaja.md) |
-| Wireframes y prototipo | Wireframe low-fi navegable en Figma (21 pantallas, flujo completo) y Web SPA con las 4 pantallas centrales. | [Reto 7](../../../../2-Documento-Investigacion/Anexos/Reto7_Wireframes_Figma/) · [Prototipo](../../../../1-Prototipo-WebSPA/) |
+| Wireframes y prototipo | Wireframe low-fi navegable en Figma (21 pantallas) y Web SPA completa con todas las pantallas del flujo: ingreso, buscar, mis trabajos, pagos, mensajes y perfil. | [Reto 7](../../../../2-Documento-Investigacion/Anexos/Reto7_Wireframes_Figma/) · [Prototipo](../../../../1-Prototipo-WebSPA/) |
 | **Iterar** | Con el Card Sorting cambiamos la navegación (5 secciones), 8 etiquetas, el ingreso (un solo perfil) y corregimos colores que no llegaban a 4.5:1. | Este documento |
 
 ### Lo que cambió gracias a los usuarios
@@ -205,7 +205,7 @@ Pantallas del wireframe de Figma que completan el flujo: la pregunta inicial "¿
 
 La Parte 1 de la EFI pide *"enumerar los conceptos vistos durante el cursado y detallar cómo se implementaron en el proyecto"*. Cada fila indica dónde mirarlo, para sacar la captura de pantalla que acompaña la descripción:
 
-- **SPA** = la Web SPA (Buscar, Ficha del trabajador, Pedir una changa y Mis trabajos).
+- **SPA** = la Web SPA, con la app completa: ingreso, Buscar, ficha, changas, Mis trabajos (detalle, cancelar y opinión), Pagos, Mensajes y Mi perfil.
 - **Figma** = el wireframe low-fi navegable en Figma, con 21 pantallas ([`Anexos/Reto7_Wireframes_Figma/v2-actual/`](../../../../2-Documento-Investigacion/Anexos/Reto7_Wireframes_Figma/v2-actual/)). El número es el nombre del frame.
 - **UI Kit** = el documento del Reto 5 ([`Anexos/Reto5_UI_Kit/`](../../../../2-Documento-Investigacion/Anexos/Reto5_UI_Kit/Reto5_UI_Kit_Serrano_Trabaja.md)).
 
@@ -294,7 +294,7 @@ Las capturas ya sacadas están en la sección 6 del [documento de investigación
 | Concepto | Cómo se aplicó | Dónde verlo |
 |---|---|---|
 | **Wireframe de baja fidelidad** | 21 pantallas en grises, sin colores ni fotos, con el flujo completo (v2), más la v1 de antes del Card Sorting y los primeros bocetos. | Figma · `Anexos/Reto1-2_Usabilidad_A11y/bocetos/` |
-| **Prototipo interactivo** | El wireframe de Figma es navegable de punta a punta (21 pantallas conectadas) y la Web SPA lleva a código las 4 pantallas centrales. | Figma (modo presentación) · SPA |
+| **Prototipo interactivo** | El wireframe de Figma es navegable de punta a punta (21 pantallas conectadas) y la Web SPA lleva a código todo ese flujo. | Figma (modo presentación) · SPA |
 | **Trigger / Action / Back** | On click → Navigate to entre pantallas; "← Volver" usa Back; cada pestaña de la barra inferior lleva a su sección. | Figma · SPA |
 | **Componentes e instancias** | Un mismo componente por elemento (botón, chip, card, aviso), reutilizado en todas las pantallas. | SPA · UI Kit |
 | **Variantes** | Botón: Default / Hover / Active / Focus / Disabled; Chip: elegido / sin elegir; Aviso: éxito / error / advertencia / info. | UI Kit · SPA |

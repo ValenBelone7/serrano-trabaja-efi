@@ -88,7 +88,7 @@ Seguimos el bucle de Dise帽o Centrado en el Usuario de la Clase 6: **entender 鈫
 | Organizar el contenido | **Card Sorting abierto** con 5 vecinos (21 al 26/09/2026): 24 tarjetas agrupadas en 6 categor铆as, con matriz de acuerdo. | [Card Sorting + Sitemap](Anexos/Reto6_Card_Sorting/) |
 | Flujo | User Flow con el camino principal y los caminos de error. | [User Flow](Anexos/User_Flow/Serrano_Trabaja_UserFlow.png) |
 | Sistema visual | **UI Kit:** paleta con contraste verificado, escala tipogr谩fica y componentes con sus estados. | [UI Kit](Anexos/Reto5_UI_Kit/Reto5_UI_Kit_Serrano_Trabaja.md) |
-| Wireframes y prototipo | Wireframe low-fi navegable en Figma (21 pantallas, flujo completo) y Web SPA con las 4 pantallas centrales. | [Reto 7](Anexos/Reto7_Wireframes_Figma/) 路 [Prototipo](../1-Prototipo-WebSPA/) |
+| Wireframes y prototipo | Wireframe low-fi navegable en Figma (21 pantallas) y Web SPA completa con todas las pantallas del flujo: ingreso, buscar, mis trabajos, pagos, mensajes y perfil. | [Reto 7](Anexos/Reto7_Wireframes_Figma/) 路 [Prototipo](../1-Prototipo-WebSPA/) |
 | **Iterar** | Con el Card Sorting cambiamos la navegaci贸n (5 secciones), 8 etiquetas, el ingreso (un solo perfil) y corregimos colores que no llegaban a 4.5:1. | Este documento |
 
 ### Lo que cambi贸 gracias a los usuarios

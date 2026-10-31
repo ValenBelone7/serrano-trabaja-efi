@@ -139,3 +139,31 @@
 - **Consecuencia**: Continuidad operativa resiliente y transparente para el usuario en condiciones de baja conectividad.
 
 
+
+---
+
+### [ADR-020] · [2026-10-31] — App completa: las 21 pantallas del wireframe en la SPA
+- **Contexto**: La EFI pide un prototipo funcional de la app completa. La v2 tenía 4 pantallas reales y Pagos, Mensajes y Mi perfil eran pantallas provisorias.
+- **Decisión**: Implementar todas las pantallas del wireframe v2 (ingreso, changa pedida, sin señal, detalle del trabajo, cancelar, opinión, pagos, acordar pago, pago rechazado, mensajes, conversación, mi perfil y editar perfil) en `app.js`, con el mismo sistema visual (32/24/18/14, 56px, chips, ícono + texto). Las funciones de la sección "Más" que no tienen frame propio (Aparecer primero, Cursos, Avisar de un problema) se resuelven con una ventana de confirmación, sin inventar pantallas.
+- **Consecuencia**: Todos los flujos de la especificación §7 se pueden recorrer de punta a punta en la SPA.
+
+---
+
+### [ADR-021] · [2026-10-31] — El ingreso es la primera pantalla y la sesión vive en el celular
+- **Contexto**: El flujo de la especificación empieza por Crear cuenta → Confirmá tu teléfono → ¿Buscás a alguien o buscás changas?
+- **Decisión**: Sin `serrano_sesion` en `localStorage`, toda ruta lleva a `#crear-cuenta` (o a `#entrar` si `serrano_tuvo_cuenta` existe). "Salir" en Mi perfil borra la sesión. No hay contraseña ni redes sociales.
+- **Consecuencia**: La primera vez que alguien abre la app ve el ingreso; después entra directo a Buscar.
+
+---
+
+### [ADR-022] · [2026-10-31] — Simulaciones visibles para probar los errores
+- **Contexto**: El prototipo no manda SMS ni cobra de verdad, pero hay que poder mostrar los caminos de error del User Flow.
+- **Decisión**: El código `0000` simula un código incorrecto y un pago de `$999` simula que Mercado Pago lo rechaza. Cada pantalla lo aclara con una línea "Prototipo: …" en 14px, para que nadie lo tome como un error real.
+- **Consecuencia**: Los caminos de error (02-Error y 31-Rechazado) se pueden mostrar en vivo sin trucos ocultos.
+
+---
+
+### [ADR-023] · [2026-10-31] — "Sin señal" pasa a ser una pantalla
+- **Contexto**: En la v2, un pedido sin señal abría una ventana emergente. El wireframe 22 la define como pantalla.
+- **Decisión**: Al publicar sin señal se navega a `#sin-senal/:id`. Cuando vuelve la señal, la misma pantalla muestra "Tu pedido ya se publicó". Los mensajes escritos sin señal quedan como "Pendiente de enviar" y se envían solos al volver la conexión.
+- **Consecuencia**: Fidelidad al wireframe y el mismo comportamiento para pedidos y mensajes.
