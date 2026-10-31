@@ -50,7 +50,7 @@ Todo componente interactivo (`<button>`, chips, inputs, tarjetas) debe responder
 2. **Hover**: Oscurecimiento del fondo (ej. `#1857B3` en primario).
 3. **Active**: **Hundimiento de 2px** (`translate-y-[2px]`), reducción del borde inferior a 3px y eliminación de sombra (simula presión física mecánica).
 4. **Focus**: Anillo `:focus-visible` de 3px de alto contraste (`#0891B2` claro / `#22D3EE` oscuro), separado 2px del borde exterior.
-5. **Disabled**: Plano, fondo gris `#D1D5DB`, texto `#6B7280`, cursor `not-allowed`, sin sombra, acompañado de microcopy explicativo: *"Falta: cuándo, dónde"*.
+5. **Disabled**: Plano, sin opacidad (1.0), fondo gris `#D1D5DB` y texto `#6B7280` (modo claro) / fondo `#334155` y texto `#94A3B8` (modo oscuro), borde de 2px, cursor `not-allowed`, sin sombra ni transform, acompañado de microcopy explicativo: *"Falta: cuándo, dónde"*.
 
 ---
 

@@ -2,7 +2,7 @@
 
 La versión 1 la generó Antigravity siguiendo el Seminario IA y funciona: se puede buscar, ver la ficha, pedir una changa (con el modal) y ver el pedido en Mis trabajos. Pero al compararla con los wireframes, la checklist de `03-alcance-y-checklist.md` y las reglas del proyecto, encontramos **20 puntos para corregir**. Esta guía dice qué hacer, qué prompts pasarle a Antigravity y cómo comprobar que quedó bien.
 
-> **Estado:** pendiente. Cuando termines, cambiá esta línea a "aplicado en v2" para que Antigravity no vuelva a ejecutarla en tareas futuras.
+> **Estado:** aplicado en v2.
 
 ---
 

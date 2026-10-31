@@ -162,7 +162,7 @@ const TRABAJADORES = [
   }
 ];
 
-// Trabajos iniciales de muestra (wireframe 20-Mis-trabajos)
+// Trabajos iniciales de muestra (wireframe 20-Mis-trabajos — Lo que pedí)
 const TRABAJOS_MUESTRA = [
   {
     id: 'trabajo-1',
@@ -170,6 +170,7 @@ const TRABAJOS_MUESTRA = [
     estado: 'Acordado · Sin empezar',
     estadoTipo: 'acordado',
     trabajadorNombre: 'Carlos Heredia',
+    oficio: 'Pintura',
     zona: 'Zona Norte',
     fecha: 'Mañana, a las 9',
     puedeCancelar: true
@@ -177,9 +178,10 @@ const TRABAJOS_MUESTRA = [
   {
     id: 'trabajo-2',
     titulo: 'Limpiar el patio',
-    estado: '... Guardado · Falta publicar',
+    estado: 'Guardado · Falta publicar',
     estadoTipo: 'guardado',
     trabajadorNombre: 'Sin asignar',
+    oficio: 'Limpieza',
     zona: 'Zona Norte',
     fecha: 'Para mañana',
     puedeCancelar: true
@@ -190,9 +192,70 @@ const TRABAJOS_MUESTRA = [
     estado: 'Terminado · Falta opinar',
     estadoTipo: 'terminado',
     trabajadorNombre: 'Raúl Díaz',
+    oficio: 'Electricidad',
     zona: 'Zona Norte',
     fecha: 'Terminó el lunes',
     puedeOpinar: true
+  }
+];
+
+// Trabajos de muestra para la pestaña "Lo que hago" (Mis trabajos — Wireframe 20)
+const TRABAJOS_HAGO_MUESTRA = [
+  {
+    id: 'hago-1',
+    titulo: 'Cortar el pasto del frente',
+    estado: 'Acordado · Sin empezar',
+    estadoTipo: 'acordado',
+    clienteNombre: 'Doña Marta',
+    oficio: 'Limpieza',
+    zona: 'Zona Norte',
+    fecha: 'Viernes, a las 15 hs'
+  },
+  {
+    id: 'hago-2',
+    titulo: 'Cambio de cerradura',
+    estado: 'Terminado · Esperando pago',
+    estadoTipo: 'terminado',
+    clienteNombre: 'Esteban Gomez',
+    oficio: 'Albañilería',
+    zona: 'Zona Sur',
+    fecha: 'Ayer'
+  }
+];
+
+// Changas publicadas por vecinos (Buscar › Changas — Wireframe 10 y spec §6.7)
+const CHANGAS_MUESTRA = [
+  {
+    id: 'changa-1',
+    titulo: 'Arreglar un enchufe',
+    oficio: 'Electricidad',
+    zona: 'Zona Norte',
+    fecha: 'Hoy',
+    estadoTexto: 'Buscan a alguien · Hoy'
+  },
+  {
+    id: 'changa-2',
+    titulo: 'Limpiar un patio grande',
+    oficio: 'Limpieza',
+    zona: 'Zona Sur',
+    fecha: 'Hoy',
+    estadoTexto: 'Buscan a alguien · Hoy'
+  },
+  {
+    id: 'changa-3',
+    titulo: 'Reparar revoque en pared',
+    oficio: 'Albañilería',
+    zona: 'Zona Norte',
+    fecha: 'Mañana',
+    estadoTexto: 'Buscan a alguien · Mañana'
+  },
+  {
+    id: 'changa-4',
+    titulo: 'Cortar el pasto y juntar ramas',
+    oficio: 'Limpieza',
+    zona: 'Zona Norte',
+    fecha: 'Esta semana',
+    estadoTexto: 'Buscan a alguien · Esta semana'
   }
 ];
 
@@ -207,11 +270,11 @@ const state = {
   tabMisTrabajos: 'pedi',          // 'pedi' | 'hago'
   ultimoTriggerModal: null,
   borradorFormulario: {
-    tipoTrabajo: 'Changa',
-    oficio: 'Limpieza',
+    tipoTrabajo: '',
+    oficio: '',
     descripcion: '',
-    cuando: 'Hoy',
-    donde: 'Zona Norte',
+    cuando: '',
+    donde: '',
     referencia: ''
   }
 };
@@ -235,7 +298,7 @@ function guardarPedidoLocalStorage(pedido) {
     lista.unshift(pedido); // Más reciente primero
     localStorage.setItem('serrano_pedidos', JSON.stringify(lista));
   } catch (e) {
-    console.error('Error guardando en localStorage', e);
+    mostrarToast('No se pudo guardar el pedido. Verificá el almacenamiento de tu celular.', 'advertencia');
   }
 }
 
@@ -258,11 +321,11 @@ function limpiarBorradorLocalStorage() {
   try {
     localStorage.removeItem('serrano_borrador');
     state.borradorFormulario = {
-      tipoTrabajo: 'Changa',
-      oficio: 'Limpieza',
+      tipoTrabajo: '',
+      oficio: '',
       descripcion: '',
-      cuando: 'Hoy',
-      donde: 'Zona Norte',
+      cuando: '',
+      donde: '',
       referencia: ''
     };
   } catch (e) {}
@@ -274,21 +337,21 @@ function limpiarBorradorLocalStorage() {
 
 function inicializarTema() {
   const guardado = localStorage.getItem('serrano_tema');
-  const prefiereOscuro = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const esOscuro = guardado ? guardado === 'oscuro' : prefiereOscuro;
+  // Por regla de accesibilidad para sol rural (ADR-015), sin valor previo abre SIEMPRE en claro
+  const esOscuro = guardado === 'oscuro';
 
-  aplicarTema(esOscuro);
+  aplicarTema(esOscuro, guardado !== null);
 
   const btnToggle = document.getElementById('btn-toggle-tema');
   if (btnToggle) {
     btnToggle.addEventListener('click', () => {
       const actualmenteOscuro = document.documentElement.classList.contains('dark');
-      aplicarTema(!actualmenteOscuro);
+      aplicarTema(!actualmenteOscuro, true);
     });
   }
 }
 
-function aplicarTema(esOscuro) {
+function aplicarTema(esOscuro, persistir = true) {
   const root = document.documentElement;
   const iconSol = document.getElementById('icon-sol');
   const iconLuna = document.getElementById('icon-luna');
@@ -296,13 +359,13 @@ function aplicarTema(esOscuro) {
 
   if (esOscuro) {
     root.classList.add('dark');
-    localStorage.setItem('serrano_tema', 'oscuro');
+    if (persistir) localStorage.setItem('serrano_tema', 'oscuro');
     if (iconSol) iconSol.classList.add('hidden');
     if (iconLuna) iconLuna.classList.remove('hidden');
     if (textoTema) textoTema.textContent = 'Modo claro';
   } else {
     root.classList.remove('dark');
-    localStorage.setItem('serrano_tema', 'claro');
+    if (persistir) localStorage.setItem('serrano_tema', 'claro');
     if (iconSol) iconSol.classList.remove('hidden');
     if (iconLuna) iconLuna.classList.add('hidden');
     if (textoTema) textoTema.textContent = 'Modo oscuro';
@@ -325,14 +388,42 @@ function inicializarEventosRed() {
     }
   }
 
+  function sincronizarPedidosOffline() {
+    const pedidos = cargarPedidosLocalStorage();
+    let sincronizados = 0;
+    const pedidosActualizados = pedidos.map(p => {
+      if (p.estado === 'Guardado · Falta publicar' || p.sinSenal || (p.estadoTipo === 'guardado' && p.id.startsWith('pedido-'))) {
+        sincronizados++;
+        return {
+          ...p,
+          estado: 'Esperando que te escriban',
+          estadoTipo: 'nuevo',
+          sinSenal: false
+        };
+      }
+      return p;
+    });
+
+    if (sincronizados > 0) {
+      localStorage.setItem('serrano_pedidos', JSON.stringify(pedidosActualizados));
+      mostrarToast('Tu pedido ya se publicó.', 'exito');
+      if (window.location.hash === '#mis-trabajos') {
+        const app = document.getElementById('app');
+        if (app) renderVistaMisTrabajos(app);
+      }
+    } else {
+      mostrarToast('Señal restablecida. Conexión activa.', 'exito');
+    }
+  }
+
   window.addEventListener('online', () => {
     actualizarEstadoRed();
-    mostrarToast('✓ Señal restablecida. Cambios sincronizados.');
+    sincronizarPedidosOffline();
   });
 
   window.addEventListener('offline', () => {
     actualizarEstadoRed();
-    mostrarToast('⚠️ Sin señal en el celular. Se guardará de forma local.');
+    mostrarToast('Sin señal en el celular. Se guardará de forma local.', 'advertencia');
   });
 
   if (btnCerrar) {
@@ -344,12 +435,37 @@ function inicializarEventosRed() {
   actualizarEstadoRed();
 }
 
-function mostrarToast(mensaje) {
+function mostrarToast(mensaje, tipo = 'info') {
   const toast = document.getElementById('toast-notificacion');
   const texto = document.getElementById('toast-texto');
+  const icono = document.getElementById('toast-icono');
   if (!toast || !texto) return;
 
   texto.textContent = mensaje;
+
+  if (icono) {
+    if (tipo === 'exito') {
+      icono.innerHTML = `
+        <svg class="w-5 h-5 text-emerald-400 dark:text-emerald-600 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>`;
+    } else if (tipo === 'advertencia' || tipo === 'alerta') {
+      icono.innerHTML = `
+        <svg class="w-5 h-5 text-amber-400 dark:text-amber-600 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+          <line x1="12" y1="9" x2="12" y2="13"></line>
+          <line x1="12" y1="17" x2="12.01" y2="17"></line>
+        </svg>`;
+    } else {
+      icono.innerHTML = `
+        <svg class="w-5 h-5 text-blue-400 dark:text-blue-600 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="16" x2="12" y2="12"></line>
+          <line x1="12" y1="8" x2="12.01" y2="8"></line>
+        </svg>`;
+    }
+  }
+
   toast.classList.remove('hidden');
   toast.classList.add('flex');
 
@@ -554,7 +670,7 @@ function enrutar() {
     const h1 = contenedor.querySelector('h1');
     if (h1) {
       h1.setAttribute('tabindex', '-1');
-      h1.focus();
+      h1.focus({ preventScroll: true });
     }
   }, 80);
 }
@@ -576,6 +692,13 @@ function renderVistaBuscar(contenedor) {
     return matchOficio && matchZona;
   });
 
+  // Filtrar changas según estado (C2)
+  const changasFiltradas = CHANGAS_MUESTRA.filter(ch => {
+    const matchOficio = state.filtroOficio === 'Todos' || ch.oficio === state.filtroOficio;
+    const matchZona = state.filtroZona === 'Todas' || ch.zona === state.filtroZona;
+    return matchOficio && matchZona;
+  });
+
   contenedor.innerHTML = `
     <div class="space-y-8 animate-fadeIn">
       
@@ -586,20 +709,21 @@ function renderVistaBuscar(contenedor) {
           <p class="text-[18px] text-slate-600 dark:text-slate-300 font-medium">Trabajo y ayuda entre vecinos de Serrano.</p>
         </div>
 
-        <!-- Selector Trabajadores / Changas -->
+        <!-- Selector Trabajadores / Changas (C2) -->
         <div class="inline-flex p-1.5 bg-slate-100 dark:bg-slate-800 rounded-2xl border-2 border-slate-300 dark:border-slate-700 w-full sm:w-auto" role="tablist" aria-label="Elegir entre trabajadores o changas">
           <button type="button" id="tab-trabajadores" role="tab" aria-selected="${state.tabBuscarActiva === 'trabajadores'}" class="flex-1 sm:flex-initial min-h-[56px] px-6 py-3 rounded-xl font-bold text-[18px] transition-all flex items-center justify-center gap-2 ${state.tabBuscarActiva === 'trabajadores' ? 'bg-white dark:bg-slate-900 text-serrano-blue dark:text-blue-400 shadow-md border border-slate-200 dark:border-slate-700' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}">
-            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            Trabajadores
+            ${state.tabBuscarActiva === 'trabajadores' ? '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>' : ''}
+            <span>Trabajadores</span>
           </button>
           <button type="button" id="tab-changas" role="tab" aria-selected="${state.tabBuscarActiva === 'changas'}" class="flex-1 sm:flex-initial min-h-[56px] px-6 py-3 rounded-xl font-bold text-[18px] transition-all flex items-center justify-center gap-2 ${state.tabBuscarActiva === 'changas' ? 'bg-white dark:bg-slate-900 text-serrano-blue dark:text-blue-400 shadow-md border border-slate-200 dark:border-slate-700' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}">
-            Changas
+            ${state.tabBuscarActiva === 'changas' ? '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>' : ''}
+            <span>Changas</span>
           </button>
         </div>
 
         <!-- CTA PRIMARIO DESTACADO: PEDIR UNA CHANGA -->
         <div class="pt-2">
-          <a href="#pedir" class="btn btn-primary w-full sm:w-auto text-center flex items-center justify-center gap-3 shadow-lg" id="btn-cta-pedir">
+          <a href="#pedir" class="btn btn-primary force-text-white w-full sm:w-auto text-center flex items-center justify-center gap-3 shadow-lg" id="btn-cta-pedir">
             <!-- Ícono + SVG -->
             <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <line x1="12" y1="5" x2="12" y2="19"></line>
@@ -615,7 +739,7 @@ function renderVistaBuscar(contenedor) {
         <h2 class="text-[24px] font-bold text-slate-900 dark:text-white">Oficios populares</h2>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
           
-          <button type="button" data-oficio="Limpieza" class="chip-oficio min-h-[56px] px-5 py-3.5 rounded-xl border-2 font-bold text-[18px] text-left flex items-center gap-3.5 transition-all cursor-pointer ${state.filtroOficio === 'Limpieza' ? 'bg-serrano-blue text-white border-serrano-blueHover shadow-inner translate-y-[2px]' : 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700'}" aria-pressed="${state.filtroOficio === 'Limpieza'}">
+          <button type="button" data-oficio="Limpieza" class="chip-oficio min-h-[56px] px-5 py-3.5 rounded-xl border-2 font-bold text-[18px] text-left flex items-center gap-3.5 transition-all cursor-pointer ${state.filtroOficio === 'Limpieza' ? 'bg-serrano-blue text-white force-text-white border-serrano-blueHover shadow-inner translate-y-[2px]' : 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700'}" aria-pressed="${state.filtroOficio === 'Limpieza'}">
             <span class="w-9 h-9 rounded-lg bg-blue-100 dark:bg-slate-700 text-serrano-blue dark:text-blue-300 flex items-center justify-center flex-shrink-0" aria-hidden="true">
               <!-- Destello Limpieza SVG -->
               <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
@@ -623,7 +747,7 @@ function renderVistaBuscar(contenedor) {
             <span>Limpieza</span>
           </button>
 
-          <button type="button" data-oficio="Albañilería" class="chip-oficio min-h-[56px] px-5 py-3.5 rounded-xl border-2 font-bold text-[18px] text-left flex items-center gap-3.5 transition-all cursor-pointer ${state.filtroOficio === 'Albañilería' ? 'bg-serrano-blue text-white border-serrano-blueHover shadow-inner translate-y-[2px]' : 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700'}" aria-pressed="${state.filtroOficio === 'Albañilería'}">
+          <button type="button" data-oficio="Albañilería" class="chip-oficio min-h-[56px] px-5 py-3.5 rounded-xl border-2 font-bold text-[18px] text-left flex items-center gap-3.5 transition-all cursor-pointer ${state.filtroOficio === 'Albañilería' ? 'bg-serrano-blue text-white force-text-white border-serrano-blueHover shadow-inner translate-y-[2px]' : 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700'}" aria-pressed="${state.filtroOficio === 'Albañilería'}">
             <span class="w-9 h-9 rounded-lg bg-blue-100 dark:bg-slate-700 text-serrano-blue dark:text-blue-300 flex items-center justify-center flex-shrink-0" aria-hidden="true">
               <!-- Ladrillos Albañilería SVG -->
               <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="3" y1="15" x2="21" y2="15"></line><line x1="12" y1="3" x2="12" y2="9"></line><line x1="8" y1="9" x2="8" y2="15"></line><line x1="16" y1="9" x2="16" y2="15"></line><line x1="12" y1="15" x2="12" y2="21"></line></svg>
@@ -631,7 +755,7 @@ function renderVistaBuscar(contenedor) {
             <span>Albañilería</span>
           </button>
 
-          <button type="button" data-oficio="Electricidad" class="chip-oficio min-h-[56px] px-5 py-3.5 rounded-xl border-2 font-bold text-[18px] text-left flex items-center gap-3.5 transition-all cursor-pointer ${state.filtroOficio === 'Electricidad' ? 'bg-serrano-blue text-white border-serrano-blueHover shadow-inner translate-y-[2px]' : 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700'}" aria-pressed="${state.filtroOficio === 'Electricidad'}">
+          <button type="button" data-oficio="Electricidad" class="chip-oficio min-h-[56px] px-5 py-3.5 rounded-xl border-2 font-bold text-[18px] text-left flex items-center gap-3.5 transition-all cursor-pointer ${state.filtroOficio === 'Electricidad' ? 'bg-serrano-blue text-white force-text-white border-serrano-blueHover shadow-inner translate-y-[2px]' : 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700'}" aria-pressed="${state.filtroOficio === 'Electricidad'}">
             <span class="w-9 h-9 rounded-lg bg-blue-100 dark:bg-slate-700 text-serrano-blue dark:text-blue-300 flex items-center justify-center flex-shrink-0" aria-hidden="true">
               <!-- Rayo Electricidad SVG -->
               <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
@@ -647,71 +771,124 @@ function renderVistaBuscar(contenedor) {
         <div class="flex items-center justify-between">
           <h2 class="text-[24px] font-bold text-slate-900 dark:text-white">Zona</h2>
           ${state.filtroOficio !== 'Todos' || state.filtroZona !== 'Todas' ? `
-            <button type="button" id="btn-limpiar-filtros" class="text-[16px] font-semibold text-serrano-blue dark:text-blue-400 hover:underline min-h-[44px] px-2 flex items-center">
+            <button type="button" id="btn-limpiar-filtros" class="text-[18px] font-semibold text-serrano-blue dark:text-blue-400 hover:underline min-h-[56px] min-w-[56px] px-3 flex items-center justify-center cursor-pointer">
               Restablecer filtros
             </button>
           ` : ''}
         </div>
         
         <div class="chips-scroll-x" role="group" aria-label="Filtro por zona geográfica">
-          <button type="button" data-zona="Todas" class="chip min-h-[56px]" aria-pressed="${state.filtroZona === 'Todas'}">
+          <button type="button" data-zona="Todas" class="chip min-h-[56px] ${state.filtroZona === 'Todas' ? 'force-text-white' : ''}" aria-pressed="${state.filtroZona === 'Todas'}">
             ${state.filtroZona === 'Todas' ? '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>' : ''}
             <span>Todas</span>
           </button>
-          <button type="button" data-zona="Zona Norte" class="chip min-h-[56px]" aria-pressed="${state.filtroZona === 'Zona Norte'}">
+          <button type="button" data-zona="Zona Norte" class="chip min-h-[56px] ${state.filtroZona === 'Zona Norte' ? 'force-text-white' : ''}" aria-pressed="${state.filtroZona === 'Zona Norte'}">
             ${state.filtroZona === 'Zona Norte' ? '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>' : ''}
             <span>Norte</span>
           </button>
-          <button type="button" data-zona="Zona Sur" class="chip min-h-[56px]" aria-pressed="${state.filtroZona === 'Zona Sur'}">
+          <button type="button" data-zona="Zona Sur" class="chip min-h-[56px] ${state.filtroZona === 'Zona Sur' ? 'force-text-white' : ''}" aria-pressed="${state.filtroZona === 'Zona Sur'}">
             ${state.filtroZona === 'Zona Sur' ? '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>' : ''}
             <span>Sur</span>
           </button>
         </div>
       </section>
 
-      <!-- CATÁLOGO: TRABAJADORES DEL PUEBLO (GRID RESPONSIVE 1 / 2 / 3 COLUMNAS) -->
-      <section class="space-y-4 pt-2">
-        <div class="flex items-center justify-between">
-          <h2 class="text-[24px] font-bold text-slate-900 dark:text-white">Trabajadores del pueblo</h2>
-          <span class="text-[16px] font-semibold text-slate-600 dark:text-slate-400">
-            ${trabajadoresFiltrados.length} ${trabajadoresFiltrados.length === 1 ? 'disponible' : 'disponibles'}
-          </span>
-        </div>
-
-        ${trabajadoresFiltrados.length === 0 ? `
-          <div class="p-8 text-center bg-slate-50 dark:bg-slate-800/50 rounded-2xl border-2 border-dashed border-slate-300 dark:border-slate-700 space-y-3">
-            <p class="text-[20px] font-bold text-slate-800 dark:text-slate-200">No encontramos trabajadores con esos filtros.</p>
-            <p class="text-[17px] text-slate-600 dark:text-slate-400">Probá seleccionando "Todas" las zonas o restablecé los filtros.</p>
-            <button type="button" id="btn-reset-filtros-vacio" class="btn btn-secondary mt-2">Ver todos los trabajadores</button>
-          </div>
-        ` : `
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            ${trabajadoresFiltrados.map(t => renderCardTrabajador(t)).join('')}
-          </div>
-        `}
-      </section>
-
-      <!-- SECCIÓN: TAMBIÉN HAY CHANGAS (WIREFRAME 10-BUSCAR) -->
-      <section class="space-y-4 pt-6 border-t-2 border-slate-200 dark:border-slate-800">
-        <h2 class="text-[24px] font-bold text-slate-900 dark:text-white">También hay changas</h2>
-        
-        <article class="card-tap p-6 space-y-4 bg-white dark:bg-slate-900 border-2 border-slate-300 dark:border-slate-700 rounded-2xl shadow-sm">
-          <div class="space-y-1">
-            <h3 class="text-[22px] font-bold text-slate-900 dark:text-white">Arreglar un enchufe</h3>
-            <p class="text-[18px] text-slate-600 dark:text-slate-400 font-medium">Electricidad · Zona Norte</p>
+      ${state.tabBuscarActiva === 'trabajadores' ? `
+        <!-- CATÁLOGO: TRABAJADORES DEL PUEBLO (GRID RESPONSIVE 1 / 2 / 3 COLUMNAS) -->
+        <section class="space-y-4 pt-2">
+          <div class="flex items-center justify-between">
+            <h2 class="text-[24px] font-bold text-slate-900 dark:text-white">Trabajadores del pueblo</h2>
+            <span class="text-[18px] font-semibold text-slate-600 dark:text-slate-400">
+              ${trabajadoresFiltrados.length} ${trabajadoresFiltrados.length === 1 ? 'persona' : 'personas'}
+            </span>
           </div>
 
-          <div class="flex items-center gap-2.5 font-bold text-slate-800 dark:text-slate-200 text-[17px]">
-            <!-- Círculo vacío decorativo del wireframe -->
-            <span class="w-5 h-5 rounded-full border-2 border-slate-700 dark:border-slate-300 inline-block" aria-hidden="true"></span>
-            <span>Buscan a alguien · Hoy</span>
+          ${trabajadoresFiltrados.length === 0 ? `
+            <div class="p-8 text-center bg-slate-50 dark:bg-slate-800/50 rounded-2xl border-2 border-dashed border-slate-300 dark:border-slate-700 space-y-3">
+              <p class="text-[24px] font-bold text-slate-800 dark:text-slate-200">No encontramos trabajadores con esos filtros.</p>
+              <p class="text-[18px] text-slate-600 dark:text-slate-400">Probá seleccionando "Todas" las zonas o restablecé los filtros.</p>
+              <button type="button" id="btn-reset-filtros-vacio" class="btn btn-secondary mt-2 min-h-[56px]">Ver todos los trabajadores</button>
+            </div>
+          ` : `
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              ${trabajadoresFiltrados.map(t => renderCardTrabajador(t)).join('')}
+            </div>
+          `}
+        </section>
+
+        <!-- SECCIÓN: TAMBIÉN HAY CHANGAS (WIREFRAME 10-BUSCAR) -->
+        <section class="space-y-4 pt-6 border-t-2 border-slate-200 dark:border-slate-800">
+          <h2 class="text-[24px] font-bold text-slate-900 dark:text-white">También hay changas</h2>
+          
+          <article class="card-tap p-6 space-y-4 bg-white dark:bg-slate-900 border-2 border-slate-300 dark:border-slate-700 rounded-2xl shadow-sm">
+            <div class="space-y-1">
+              <h3 class="text-[24px] font-bold text-slate-900 dark:text-white">Arreglar un enchufe</h3>
+              <p class="text-[18px] text-slate-600 dark:text-slate-400 font-medium">Electricidad · Zona Norte</p>
+            </div>
+
+            <div class="flex items-center gap-2.5 font-bold text-slate-800 dark:text-slate-200 text-[18px]">
+              <!-- Círculo vacío decorativo del wireframe -->
+              <span class="w-5 h-5 rounded-full border-2 border-slate-700 dark:border-slate-300 inline-block" aria-hidden="true"></span>
+              <span>Buscan a alguien · Hoy</span>
+            </div>
+
+            <button type="button" id="btn-ver-changa-ejemplo" class="btn btn-secondary w-full">
+              Ver changa
+            </button>
+          </article>
+        </section>
+      ` : `
+        <!-- CATÁLOGO: CHANGAS DEL PUEBLO (C2) -->
+        <section class="space-y-4 pt-2">
+          <!-- Banner Avisame si hay changas nuevas (spec §6.7) -->
+          <div class="p-5 bg-blue-50 dark:bg-slate-800/80 border-2 border-blue-200 dark:border-blue-800 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="space-y-1 text-center sm:text-left">
+              <p class="text-[18px] font-bold text-slate-900 dark:text-white">¿Buscás trabajo en Serrano?</p>
+              <p class="text-[18px] text-slate-600 dark:text-slate-300">Te avisamos por mensaje cuando un vecino publique una nueva changa.</p>
+            </div>
+            <button type="button" id="btn-avisame-changas" class="btn btn-secondary min-h-[56px] text-[18px] whitespace-nowrap w-full sm:w-auto">
+              Avisame si hay changas nuevas
+            </button>
           </div>
 
-          <button type="button" class="btn btn-secondary w-full" onclick="mostrarToast('Detalle de changa disponible en la versión final de la EFI.');">
-            Ver changa
-          </button>
-        </article>
-      </section>
+          <div class="flex items-center justify-between pt-2">
+            <h2 class="text-[24px] font-bold text-slate-900 dark:text-white">Changas publicadas</h2>
+            <span class="text-[18px] font-semibold text-slate-600 dark:text-slate-400">
+              ${changasFiltradas.length} ${changasFiltradas.length === 1 ? 'changa' : 'changas'}
+            </span>
+          </div>
+
+          ${changasFiltradas.length === 0 ? `
+            <div class="p-8 text-center bg-slate-50 dark:bg-slate-800/50 rounded-2xl border-2 border-dashed border-slate-300 dark:border-slate-700 space-y-3">
+              <p class="text-[24px] font-bold text-slate-800 dark:text-slate-200">No encontramos changas con esos filtros.</p>
+              <p class="text-[18px] text-slate-600 dark:text-slate-400">Probá seleccionando "Todas" las zonas o restablecé los filtros.</p>
+              <button type="button" id="btn-reset-filtros-vacio" class="btn btn-secondary mt-2 min-h-[56px]">Ver todas las changas</button>
+            </div>
+          ` : `
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              ${changasFiltradas.map(ch => `
+                <article class="card-tap p-6 flex flex-col justify-between gap-4 bg-white dark:bg-slate-900 border-2 border-slate-300 dark:border-slate-700 rounded-2xl shadow-sm hover:border-serrano-blue dark:hover:border-blue-500 transition-all">
+                  <div class="space-y-1">
+                    <h3 class="text-[24px] font-bold text-slate-900 dark:text-white leading-tight">${ch.titulo}</h3>
+                    <p class="text-[18px] text-slate-600 dark:text-slate-400 font-medium">${ch.oficio} · ${ch.zona}</p>
+                  </div>
+
+                  <div class="flex items-center gap-2.5 font-bold text-slate-800 dark:text-slate-200 text-[18px]">
+                    <span class="w-5 h-5 rounded-full border-2 border-slate-700 dark:border-slate-300 inline-block" aria-hidden="true"></span>
+                    <span>${ch.estadoTexto}</span>
+                  </div>
+
+                  <div class="pt-2">
+                    <button type="button" class="btn btn-secondary w-full btn-ver-changa">
+                      Ver changa
+                    </button>
+                  </div>
+                </article>
+              `).join('')}
+            </div>
+          `}
+        </section>
+      `}
 
     </div>
   `;
@@ -730,30 +907,30 @@ function renderCardTrabajador(t) {
       
       <!-- Encabezado de la Tarjeta con Avatar con Iniciales y Nombre -->
       <div class="flex items-start gap-4">
-        <!-- Avatar accesible (cuadrado con iniciales similar al recuadro Foto de wireframes) -->
-        <div class="w-18 h-18 sm:w-20 sm:h-20 rounded-2xl bg-slate-100 dark:bg-slate-800 border-2 border-slate-300 dark:border-slate-600 flex flex-col items-center justify-center flex-shrink-0 font-bold text-slate-700 dark:text-slate-200 text-[20px] shadow-inner" aria-hidden="true">
+        <!-- Avatar accesible (cuadrado con iniciales similar al recuadro Foto de wireframes) (B8) -->
+        <div class="w-20 h-20 rounded-2xl bg-slate-100 dark:bg-slate-800 border-2 border-slate-300 dark:border-slate-600 flex flex-col items-center justify-center flex-shrink-0 font-bold text-slate-700 dark:text-slate-200 text-[24px] shadow-inner" aria-hidden="true">
           <span>${iniciales}</span>
-          <span class="text-[11px] font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Foto</span>
+          <span class="text-[14px] font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Foto</span>
         </div>
 
         <div class="space-y-1 flex-1">
           ${t.destacado ? `
-            <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[13px] font-bold bg-amber-100 dark:bg-amber-950/80 text-amber-900 dark:text-amber-300 mb-1 border border-amber-300 dark:border-amber-700">
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[14px] font-bold bg-amber-100 dark:bg-amber-950/80 text-amber-900 dark:text-amber-300 mb-1 border border-amber-300 dark:border-amber-700">
               <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
               Destacado
             </span>
           ` : ''}
-          <h3 class="text-[20px] font-bold text-slate-900 dark:text-white leading-tight">${t.nombre}</h3>
-          <p class="text-[17px] font-semibold text-slate-700 dark:text-slate-300">${t.oficio}</p>
-          <p class="text-[15px] text-slate-500 dark:text-slate-400 flex items-center gap-1">
-            <svg class="w-4 h-4 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          <h3 class="text-[24px] font-bold text-slate-900 dark:text-white leading-tight">${t.nombre}</h3>
+          <p class="text-[18px] font-semibold text-slate-700 dark:text-slate-300">${t.oficio}</p>
+          <p class="text-[18px] text-slate-500 dark:text-slate-400 flex items-center gap-1">
+            <svg class="w-4 h-4 text-slate-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
             ${t.zona} · ${t.localidad}
           </p>
         </div>
       </div>
 
       <!-- Métricas: Estrellas + Trabajos realizados -->
-      <div class="flex items-center gap-2 text-[17px] font-bold text-slate-800 dark:text-slate-200">
+      <div class="flex items-center gap-2 text-[18px] font-bold text-slate-800 dark:text-slate-200">
         <span class="text-amber-500 flex items-center" aria-label="${t.estrellas} estrellas de calificación">
           ${'★'.repeat(t.estrellas)}${'☆'.repeat(5 - t.estrellas)}
         </span>
@@ -764,13 +941,13 @@ function renderCardTrabajador(t) {
       <!-- Estado de Disponibilidad (NUNCA SOLO POR COLOR: ÍCONO + TEXTO + FORMA) -->
       <div>
         ${t.disponibleHoy ? `
-          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 font-bold text-[16px]">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 font-bold text-[18px]">
             <!-- Check verde SVG -->
             <svg class="w-5 h-5 flex-shrink-0 text-emerald-600 dark:text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
             <span>Disponible hoy</span>
           </div>
         ` : `
-          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-400 font-bold text-[16px]">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-400 font-bold text-[18px]">
             <!-- Círculo gris vacío SVG -->
             <span class="w-4 h-4 rounded-full border-2 border-slate-500 dark:border-slate-400 inline-block" aria-hidden="true"></span>
             <span>Ocupado</span>
@@ -790,7 +967,7 @@ function renderCardTrabajador(t) {
 }
 
 function bindEventosBuscar(contenedor) {
-  // Selector Trabajadores / Changas
+  // Selector Trabajadores / Changas (C2)
   const tabTrabajadores = contenedor.querySelector('#tab-trabajadores');
   const tabChangas = contenedor.querySelector('#tab-changas');
 
@@ -801,7 +978,7 @@ function bindEventosBuscar(contenedor) {
     });
     tabChangas.addEventListener('click', () => {
       state.tabBuscarActiva = 'changas';
-      mostrarToast('Mostrando changas publicadas por vecinos.');
+      renderVistaBuscar(contenedor);
     });
   }
 
@@ -823,6 +1000,21 @@ function bindEventosBuscar(contenedor) {
       renderVistaBuscar(contenedor);
     });
   });
+
+  // Botón Ver changa en tarjetas (B9: addEventListener sin onclick)
+  contenedor.querySelectorAll('.btn-ver-changa, #btn-ver-changa-ejemplo').forEach(btn => {
+    btn.addEventListener('click', () => {
+      mostrarToast('Detalle de changa disponible en la versión final de la EFI.', 'info');
+    });
+  });
+
+  // Botón Avisame si hay changas nuevas (spec §6.7 & C2)
+  const btnAvisame = contenedor.querySelector('#btn-avisame-changas');
+  if (btnAvisame) {
+    btnAvisame.addEventListener('click', () => {
+      mostrarToast('Te avisaremos cuando publiquen nuevas changas en Serrano.', 'exito');
+    });
+  }
 
   // Botones de Reset
   const btnLimpiar = contenedor.querySelector('#btn-limpiar-filtros');
@@ -846,9 +1038,9 @@ function renderVistaTrabajador(contenedor, id) {
   if (!t) {
     contenedor.innerHTML = `
       <div class="p-8 text-center space-y-4">
-        <h1 class="text-[28px] font-bold text-slate-900 dark:text-white">Trabajador no encontrado</h1>
+        <h1 class="text-[32px] font-bold text-slate-900 dark:text-white">Trabajador no encontrado</h1>
         <p class="text-[18px] text-slate-600 dark:text-slate-400">El perfil que buscás no existe o fue dado de baja.</p>
-        <a href="#buscar" class="btn btn-primary inline-flex">Volver a Buscar</a>
+        <a href="#buscar" class="btn btn-primary inline-flex force-text-white">Volver a Buscar</a>
       </div>
     `;
     return;
@@ -858,11 +1050,11 @@ function renderVistaTrabajador(contenedor, id) {
   const iniciales = (partesNombre[0][0] + (partesNombre[1] ? partesNombre[1][0] : '')).toUpperCase();
 
   contenedor.innerHTML = `
-    <div class="max-w-2xl mx-auto space-y-8 animate-fadeIn pb-24 lg:pb-6">
+    <div class="max-w-2xl mx-auto space-y-8 animate-fadeIn pb-24 lg:pb-0">
       
       <!-- Botón Volver Accesible -->
       <div>
-        <a href="#buscar" class="btn btn-secondary inline-flex items-center gap-2 text-[17px] min-h-[56px] px-5" id="btn-volver-ficha">
+        <a href="#buscar" class="btn btn-secondary inline-flex items-center gap-2 text-[18px] min-h-[56px] px-5" id="btn-volver-ficha">
           <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
           <span>Volver</span>
         </a>
@@ -870,17 +1062,17 @@ function renderVistaTrabajador(contenedor, id) {
 
       <!-- ENCABEZADO CON NOMBRE Y OFICIO -->
       <section class="space-y-4">
-        <h1 class="text-[32px] sm:text-[36px] font-bold text-slate-900 dark:text-white leading-tight">${t.nombre}</h1>
+        <h1 class="text-[32px] font-bold text-slate-900 dark:text-white leading-tight">${t.nombre}</h1>
 
         <div class="flex items-start gap-5">
           <!-- Avatar grande -->
-          <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl bg-slate-100 dark:bg-slate-800 border-2 border-slate-300 dark:border-slate-600 flex flex-col items-center justify-center flex-shrink-0 font-bold text-slate-700 dark:text-slate-200 text-[26px] shadow-inner" aria-hidden="true">
+          <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl bg-slate-100 dark:bg-slate-800 border-2 border-slate-300 dark:border-slate-600 flex flex-col items-center justify-center flex-shrink-0 font-bold text-slate-700 dark:text-slate-200 text-[24px] shadow-inner" aria-hidden="true">
             <span>${iniciales}</span>
-            <span class="text-[12px] font-medium text-slate-500 uppercase tracking-wider">Foto</span>
+            <span class="text-[14px] font-medium text-slate-500 uppercase tracking-wider">Foto</span>
           </div>
 
           <div class="space-y-1.5 flex-1">
-            <p class="text-[22px] font-bold text-slate-900 dark:text-white">${t.oficio}</p>
+            <p class="text-[24px] font-bold text-slate-900 dark:text-white">${t.oficio}</p>
             <p class="text-[18px] text-slate-600 dark:text-slate-300 flex items-center gap-1.5 font-medium">
               <svg class="w-5 h-5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
               ${t.zona} · ${t.localidad}
@@ -897,12 +1089,12 @@ function renderVistaTrabajador(contenedor, id) {
       <!-- BLOQUE DESTACADO DE DISPONIBILIDAD -->
       <section>
         ${t.disponibleHoy ? `
-          <div class="p-4 sm:p-5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border-2 border-emerald-400 dark:border-emerald-700 flex items-center gap-3.5 text-emerald-900 dark:text-emerald-200 font-bold text-[19px]">
+          <div class="p-4 sm:p-5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border-2 border-emerald-400 dark:border-emerald-700 flex items-center gap-3.5 text-emerald-900 dark:text-emerald-200 font-bold text-[18px]">
             <svg class="w-7 h-7 text-emerald-600 dark:text-emerald-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
             <span>Disponible hoy</span>
           </div>
         ` : `
-          <div class="p-4 sm:p-5 rounded-2xl bg-slate-100 dark:bg-slate-800 border-2 border-slate-300 dark:border-slate-700 flex items-center gap-3.5 text-slate-700 dark:text-slate-300 font-bold text-[19px]">
+          <div class="p-4 sm:p-5 rounded-2xl bg-slate-100 dark:bg-slate-800 border-2 border-slate-300 dark:border-slate-700 flex items-center gap-3.5 text-slate-700 dark:text-slate-300 font-bold text-[18px]">
             <span class="w-5 h-5 rounded-full border-2 border-slate-500 inline-block" aria-hidden="true"></span>
             <span>Ocupado en este momento</span>
           </div>
@@ -918,13 +1110,13 @@ function renderVistaTrabajador(contenedor, id) {
           </div>
         ` : `
           <div class="flex items-center gap-3 text-[18px] font-medium text-slate-600 dark:text-slate-400">
-            <span class="w-5 h-5 rounded-full border border-slate-400 flex items-center justify-center text-xs">i</span>
+            <span class="w-5 h-5 rounded-full border border-slate-400 flex items-center justify-center text-[14px] font-bold">i</span>
             <span>Todavía no confirmó su teléfono</span>
           </div>
         `}
 
         <div class="flex items-center gap-3 text-[18px] font-bold text-slate-900 dark:text-slate-100">
-          <span class="text-amber-500 text-[20px]" aria-hidden="true">★</span>
+          <span class="text-amber-500 text-[24px]" aria-hidden="true">★</span>
           <span>Lo recomiendan ${t.vecinosRecomiendan} vecinos</span>
         </div>
       </section>
@@ -946,11 +1138,11 @@ function renderVistaTrabajador(contenedor, id) {
             <article class="p-5 bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-700 rounded-2xl space-y-2 shadow-sm">
               <div class="flex items-center justify-between">
                 <span class="font-bold text-[18px] text-slate-900 dark:text-white">${op.autor}</span>
-                <span class="text-amber-500 text-[16px]" aria-label="${op.estrellas} estrellas">
+                <span class="text-amber-500 text-[18px]" aria-label="${op.estrellas} estrellas">
                   ${'★'.repeat(op.estrellas)}${'☆'.repeat(5 - op.estrellas)}
                 </span>
               </div>
-              <p class="text-[17px] text-slate-700 dark:text-slate-300 leading-normal">
+              <p class="text-[18px] text-slate-700 dark:text-slate-300 leading-normal">
                 "${op.texto}"
               </p>
             </article>
@@ -966,14 +1158,14 @@ function renderVistaTrabajador(contenedor, id) {
       </section>
 
       <!-- MICROCOPY ACLARATORIO ANTES DEL CONTACTO -->
-      <p class="text-[16px] text-slate-500 dark:text-slate-400 text-center font-medium">
+      <p class="text-[18px] text-slate-500 dark:text-slate-400 text-center font-medium">
         Contactar abre la conversación con ${t.nombre.split(' ')[0]}.
       </p>
 
       <!-- BOTÓN FIJO INFERIOR PRIMARIO (MANO ABIERTA SVG CULTURAL) -->
-      <div class="lg:static fixed bottom-[72px] left-0 right-0 z-30 p-4 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t-2 border-slate-200 dark:border-slate-800 lg:border-t-0 lg:p-0 lg:bg-transparent">
+      <div class="lg:static fixed bottom-[72px] left-0 right-0 z-30 p-4 bg-white dark:bg-slate-900 border-t-2 border-slate-200 dark:border-slate-800 lg:border-t-0 lg:p-0 lg:bg-transparent">
         <div class="max-w-2xl mx-auto">
-          <button type="button" class="btn btn-primary w-full shadow-xl flex items-center justify-center gap-3 text-[19px]" id="btn-contactar-trabajador">
+          <button type="button" class="btn btn-primary w-full shadow-xl flex items-center justify-center gap-3 text-[18px] force-text-white" id="btn-contactar-trabajador">
             <!-- Ícono Mano abierta SVG -->
             <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0"></path>
@@ -981,7 +1173,7 @@ function renderVistaTrabajador(contenedor, id) {
               <path d="M10 10.5V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v8"></path>
               <path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"></path>
             </svg>
-            <span>Contactar a ${t.nombre.split(' ')[0]}</span>
+            <span>Contactar</span>
           </button>
         </div>
       </div>
@@ -1034,6 +1226,15 @@ function renderVistaTrabajador(contenedor, id) {
   }
 }
 
+// Función auxiliar para recortar títulos de pedidos en la última palabra completa (C7)
+function formatearTituloPedido(descripcion, maxLen = 45) {
+  const texto = (descripcion || '').trim();
+  if (texto.length <= maxLen) return texto;
+  const cortado = texto.slice(0, maxLen);
+  const ultimoEspacio = cortado.lastIndexOf(' ');
+  return (ultimoEspacio > 15 ? cortado.slice(0, ultimoEspacio) : cortado) + '...';
+}
+
 // ----------------------------------------------------------------------------
 // VISTA 3: PEDIR UNA CHANGA (#pedir — Wireframe 21-Pedir-changa)
 // ----------------------------------------------------------------------------
@@ -1042,11 +1243,11 @@ function renderVistaPedirChanga(contenedor) {
   const formState = state.borradorFormulario;
 
   contenedor.innerHTML = `
-    <div class="max-w-2xl mx-auto space-y-8 animate-fadeIn pb-16">
+    <div class="max-w-2xl mx-auto space-y-8 animate-fadeIn">
       
       <!-- Botón Volver -->
       <div>
-        <a href="#buscar" class="btn btn-secondary inline-flex items-center gap-2 text-[17px] min-h-[56px] px-5" id="btn-volver-pedir">
+        <a href="#buscar" class="btn btn-secondary inline-flex items-center gap-2 text-[18px] min-h-[56px] px-5" id="btn-volver-pedir">
           <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
           <span>Volver</span>
         </a>
@@ -1054,20 +1255,20 @@ function renderVistaPedirChanga(contenedor) {
 
       <!-- TÍTULO Y SUBTÍTULO -->
       <section class="space-y-2">
-        <h1 class="text-[32px] sm:text-[36px] font-bold text-slate-900 dark:text-white leading-tight">Pedir una changa</h1>
+        <h1 class="text-[32px] font-bold text-slate-900 dark:text-white leading-tight">Pedir una changa</h1>
         <p class="text-[18px] text-slate-600 dark:text-slate-300 font-medium">Contá qué necesitás. No hace falta escribir mucho.</p>
       </section>
 
-      <!-- FORMULARIO ACCESIBLE EN CHIPS (SIN <SELECT>) -->
+      <!-- FORMULARIO ACCESIBLE EN CHIPS (SIN <SELECT> — C1: ARRANCAN SIN ELEGIR) -->
       <form id="form-pedir-changa" class="space-y-7" novalidate>
         
         <!-- 1. Tipo de trabajo -->
         <fieldset class="space-y-3">
-          <legend class="text-[20px] font-bold text-slate-900 dark:text-white">Tipo de trabajo</legend>
+          <legend class="text-[24px] font-bold text-slate-900 dark:text-white">Tipo de trabajo <span class="text-red-500" aria-hidden="true">*</span></legend>
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-3" role="radiogroup" aria-label="Seleccioná el tipo de trabajo">
             ${['Changa', 'Trabajo fijo', 'Servicio puntual'].map(tipo => `
-              <button type="button" data-grupo="tipoTrabajo" data-valor="${tipo}" class="chip-form min-h-[56px] px-4 py-3 rounded-xl border-2 font-bold text-[18px] text-center transition-all ${formState.tipoTrabajo === tipo ? 'bg-serrano-blue text-white border-serrano-blueHover shadow-inner translate-y-[2px]' : 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700'}" aria-pressed="${formState.tipoTrabajo === tipo}">
-                ${formState.tipoTrabajo === tipo ? '✓ ' : ''}${tipo}
+              <button type="button" data-grupo="tipoTrabajo" data-valor="${tipo}" class="chip-form min-h-[56px] px-4 py-3 rounded-xl border-2 font-bold text-[18px] text-center transition-all ${formState.tipoTrabajo === tipo ? 'bg-serrano-blue text-white force-text-white border-serrano-blueHover shadow-inner translate-y-[2px]' : 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700'}" aria-pressed="${formState.tipoTrabajo === tipo}">
+                ${formState.tipoTrabajo === tipo ? '<svg class="w-5 h-5 inline-block mr-1.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>' : ''}${tipo}
               </button>
             `).join('')}
           </div>
@@ -1075,11 +1276,11 @@ function renderVistaPedirChanga(contenedor) {
 
         <!-- 2. Oficio -->
         <fieldset class="space-y-3">
-          <legend class="text-[20px] font-bold text-slate-900 dark:text-white">Oficio</legend>
+          <legend class="text-[24px] font-bold text-slate-900 dark:text-white">Oficio <span class="text-red-500" aria-hidden="true">*</span></legend>
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-3" role="radiogroup" aria-label="Seleccioná el oficio requerido">
             ${['Limpieza', 'Albañilería', 'Electricidad'].map(oficio => `
-              <button type="button" data-grupo="oficio" data-valor="${oficio}" class="chip-form min-h-[56px] px-4 py-3 rounded-xl border-2 font-bold text-[18px] text-center transition-all ${formState.oficio === oficio ? 'bg-serrano-blue text-white border-serrano-blueHover shadow-inner translate-y-[2px]' : 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700'}" aria-pressed="${formState.oficio === oficio}">
-                ${formState.oficio === oficio ? '✓ ' : ''}${oficio}
+              <button type="button" data-grupo="oficio" data-valor="${oficio}" class="chip-form min-h-[56px] px-4 py-3 rounded-xl border-2 font-bold text-[18px] text-center transition-all ${formState.oficio === oficio ? 'bg-serrano-blue text-white force-text-white border-serrano-blueHover shadow-inner translate-y-[2px]' : 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700'}" aria-pressed="${formState.oficio === oficio}">
+                ${formState.oficio === oficio ? '<svg class="w-5 h-5 inline-block mr-1.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>' : ''}${oficio}
               </button>
             `).join('')}
           </div>
@@ -1087,14 +1288,14 @@ function renderVistaPedirChanga(contenedor) {
 
         <!-- 3. Qué necesitás (Textarea con validación reactiva >= 10 chars) -->
         <div class="space-y-2">
-          <label for="campo-descripcion" class="block text-[20px] font-bold text-slate-900 dark:text-white">
+          <label for="campo-descripcion" class="block text-[24px] font-bold text-slate-900 dark:text-white">
             Qué necesitás <span class="text-red-500" aria-hidden="true">*</span>
           </label>
           <textarea id="campo-descripcion" rows="3" class="input-serrano resize-none" placeholder="Limpiar el patio y juntar las hojas." aria-describedby="ayuda-descripcion error-descripcion">${formState.descripcion}</textarea>
-          <p id="ayuda-descripcion" class="text-[15px] text-slate-500 dark:text-slate-400">
+          <p id="ayuda-descripcion" class="text-[18px] text-slate-500 dark:text-slate-400">
             Ejemplo: limpiar un patio chico. (Mínimo 10 letras).
           </p>
-          <p id="error-descripcion" class="hidden text-[16px] font-bold text-serrano-dangerText dark:text-red-400 flex items-center gap-1.5" role="alert">
+          <p id="error-descripcion" class="hidden text-[18px] font-bold text-serrano-dangerText dark:text-red-400 flex items-center gap-1.5" role="alert">
             <svg class="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
             <span>Contanos un poco más sobre lo que necesitás (al menos 10 letras).</span>
           </p>
@@ -1102,11 +1303,11 @@ function renderVistaPedirChanga(contenedor) {
 
         <!-- 4. Cuándo -->
         <fieldset class="space-y-3">
-          <legend class="text-[20px] font-bold text-slate-900 dark:text-white">Cuándo</legend>
+          <legend class="text-[24px] font-bold text-slate-900 dark:text-white">Cuándo <span class="text-red-500" aria-hidden="true">*</span></legend>
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-3" role="radiogroup" aria-label="Elegí cuándo se debe hacer">
             ${['Hoy', 'Mañana', 'Esta semana', 'A convenir'].map(tiempo => `
-              <button type="button" data-grupo="cuando" data-valor="${tiempo}" class="chip-form min-h-[56px] px-3 py-3 rounded-xl border-2 font-bold text-[17px] text-center transition-all ${formState.cuando === tiempo ? 'bg-serrano-blue text-white border-serrano-blueHover shadow-inner translate-y-[2px]' : 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700'}" aria-pressed="${formState.cuando === tiempo}">
-                ${formState.cuando === tiempo ? '✓ ' : ''}${tiempo}
+              <button type="button" data-grupo="cuando" data-valor="${tiempo}" class="chip-form min-h-[56px] px-3 py-3 rounded-xl border-2 font-bold text-[18px] text-center transition-all ${formState.cuando === tiempo ? 'bg-serrano-blue text-white force-text-white border-serrano-blueHover shadow-inner translate-y-[2px]' : 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700'}" aria-pressed="${formState.cuando === tiempo}">
+                ${formState.cuando === tiempo ? '<svg class="w-5 h-5 inline-block mr-1.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>' : ''}${tiempo}
               </button>
             `).join('')}
           </div>
@@ -1114,11 +1315,11 @@ function renderVistaPedirChanga(contenedor) {
 
         <!-- 5. Dónde -->
         <fieldset class="space-y-3">
-          <legend class="text-[20px] font-bold text-slate-900 dark:text-white">Dónde</legend>
+          <legend class="text-[24px] font-bold text-slate-900 dark:text-white">Dónde <span class="text-red-500" aria-hidden="true">*</span></legend>
           <div class="grid grid-cols-2 gap-3" role="radiogroup" aria-label="Elegí la zona del pueblo">
             ${['Zona Norte', 'Zona Sur'].map(zona => `
-              <button type="button" data-grupo="donde" data-valor="${zona}" class="chip-form min-h-[56px] px-4 py-3 rounded-xl border-2 font-bold text-[18px] text-center transition-all ${formState.donde === zona ? 'bg-serrano-blue text-white border-serrano-blueHover shadow-inner translate-y-[2px]' : 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700'}" aria-pressed="${formState.donde === zona}">
-                ${formState.donde === zona ? '✓ ' : ''}${zona}
+              <button type="button" data-grupo="donde" data-valor="${zona}" class="chip-form min-h-[56px] px-4 py-3 rounded-xl border-2 font-bold text-[18px] text-center transition-all ${formState.donde === zona ? 'bg-serrano-blue text-white force-text-white border-serrano-blueHover shadow-inner translate-y-[2px]' : 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700'}" aria-pressed="${formState.donde === zona}">
+                ${formState.donde === zona ? '<svg class="w-5 h-5 inline-block mr-1.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>' : ''}${zona}
               </button>
             `).join('')}
           </div>
@@ -1126,27 +1327,28 @@ function renderVistaPedirChanga(contenedor) {
 
         <!-- 6. Referencia del lugar -->
         <div class="space-y-2">
-          <label for="campo-referencia" class="block text-[20px] font-bold text-slate-900 dark:text-white">
+          <label for="campo-referencia" class="block text-[24px] font-bold text-slate-900 dark:text-white">
             Una referencia del lugar
           </label>
           <input type="text" id="campo-referencia" class="input-serrano" placeholder="Cerca de la plaza, en Serrano." value="${formState.referencia}" aria-describedby="ayuda-referencia">
-          <p id="ayuda-referencia" class="text-[15px] text-slate-500 dark:text-slate-400">
+          <p id="ayuda-referencia" class="text-[18px] text-slate-500 dark:text-slate-400">
             La dirección exacta la pasás por mensaje.
           </p>
         </div>
 
         <!-- Microcopy informativo antes de enviar -->
-        <p class="text-[17px] text-slate-600 dark:text-slate-400 font-medium">
+        <p class="text-[18px] text-slate-600 dark:text-slate-400 font-medium">
           El precio se acuerda por mensaje antes de empezar.
         </p>
 
-        <!-- BOTÓN PUBLICAR PEDIDO + MICROCOPY DE FALTANTES -->
+        <!-- BOTÓN PUBLICAR PEDIDO + MICROCOPY DE FALTANTES (C1 & C8) -->
         <div class="space-y-2 pt-2">
-          <button type="submit" id="btn-publicar-pedido" class="btn btn-primary w-full shadow-xl text-[19px]" disabled>
+          <button type="submit" id="btn-publicar-pedido" class="btn btn-primary w-full shadow-xl text-[18px] force-text-white" disabled>
             Publicar pedido
           </button>
-          <p id="microcopy-faltantes" class="text-[15px] text-slate-600 dark:text-slate-400 text-center font-medium" role="status" aria-live="polite">
-            Falta: qué necesitás (al menos 10 letras).
+          <p id="microcopy-faltantes" class="text-[18px] text-slate-600 dark:text-slate-400 text-center font-medium flex items-center justify-center gap-2" role="status" aria-live="polite">
+            <svg class="w-5 h-5 text-slate-500 dark:text-slate-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            <span>Falta: tipo de trabajo, oficio, qué necesitás, cuándo, dónde.</span>
           </p>
         </div>
 
@@ -1167,22 +1369,42 @@ function bindEventosFormulario(contenedor) {
   const errorDesc = contenedor.querySelector('#error-descripcion');
   const chips = contenedor.querySelectorAll('.chip-form');
 
+  // Validación multi-campo (C1 & C8: 5 campos validados e ícono SVG sin texto plano)
   function validarFormulario() {
     const desc = textareaDesc ? textareaDesc.value.trim() : '';
-    const esValido = desc.length >= 10;
+    const tipo = state.borradorFormulario.tipoTrabajo;
+    const oficio = state.borradorFormulario.oficio;
+    const cuando = state.borradorFormulario.cuando;
+    const donde = state.borradorFormulario.donde;
+
+    const faltantes = [];
+    if (!tipo) faltantes.push('tipo de trabajo');
+    if (!oficio) faltantes.push('oficio');
+    if (!desc || desc.length < 10) {
+      faltantes.push('qué necesitás');
+    }
+    if (!cuando) faltantes.push('cuándo');
+    if (!donde) faltantes.push('dónde');
+
+    const esValido = faltantes.length === 0;
 
     if (btnSubmit && microcopy) {
       if (esValido) {
         btnSubmit.disabled = false;
-        microcopy.textContent = '✓ Todo listo para publicar.';
-        microcopy.className = 'text-[15px] text-serrano-successText dark:text-emerald-400 text-center font-bold';
+        microcopy.innerHTML = `
+          <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          <span>Todo listo para publicar.</span>
+        `;
+        microcopy.className = 'text-[18px] text-serrano-successText dark:text-emerald-400 text-center font-bold flex items-center justify-center gap-2';
         if (textareaDesc) textareaDesc.classList.remove('input-error');
         if (errorDesc) errorDesc.classList.add('hidden');
       } else {
         btnSubmit.disabled = true;
-        const faltan = 10 - desc.length;
-        microcopy.textContent = `Falta: qué necesitás (${faltan > 0 ? faltan + ' letras más' : 'descripción'}).`;
-        microcopy.className = 'text-[15px] text-slate-600 dark:text-slate-400 text-center font-medium';
+        microcopy.innerHTML = `
+          <svg class="w-5 h-5 text-slate-500 dark:text-slate-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+          <span>Falta: ${faltantes.join(', ')}.</span>
+        `;
+        microcopy.className = 'text-[18px] text-slate-600 dark:text-slate-400 text-center font-medium flex items-center justify-center gap-2';
       }
     }
 
@@ -1206,8 +1428,8 @@ function bindEventosFormulario(contenedor) {
         const cActivo = cVal === valor;
         c.setAttribute('aria-pressed', cActivo);
         if (cActivo) {
-          c.className = 'chip-form min-h-[56px] px-4 py-3 rounded-xl border-2 font-bold text-[18px] text-center transition-all bg-serrano-blue text-white border-serrano-blueHover shadow-inner translate-y-[2px]';
-          c.innerHTML = `✓ ${cVal}`;
+          c.className = 'chip-form min-h-[56px] px-4 py-3 rounded-xl border-2 font-bold text-[18px] text-center transition-all bg-serrano-blue text-white force-text-white border-serrano-blueHover shadow-inner translate-y-[2px]';
+          c.innerHTML = `<svg class="w-5 h-5 inline-block mr-1.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>${cVal}`;
         } else {
           c.className = 'chip-form min-h-[56px] px-4 py-3 rounded-xl border-2 font-bold text-[18px] text-center transition-all bg-white dark:bg-slate-800 text-slate-900 dark:text-white border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700';
           c.innerHTML = cVal;
@@ -1240,34 +1462,36 @@ function bindEventosFormulario(contenedor) {
       e.preventDefault();
 
       if (!validarFormulario()) {
-        if (textareaDesc) {
+        if (textareaDesc && (!textareaDesc.value.trim() || textareaDesc.value.trim().length < 10)) {
           textareaDesc.classList.add('input-error');
           textareaDesc.focus();
+          if (errorDesc) errorDesc.classList.remove('hidden');
         }
-        if (errorDesc) errorDesc.classList.remove('hidden');
         return;
       }
 
+      const esOffline = !navigator.onLine;
       const nuevoPedido = {
         id: 'pedido-' + Date.now(),
-        titulo: `${state.borradorFormulario.oficio}: ${state.borradorFormulario.descripcion.slice(0, 32)}...`,
+        titulo: formatearTituloPedido(state.borradorFormulario.descripcion), // C7: título limpio sin oficio
         descripcion: state.borradorFormulario.descripcion,
         tipoTrabajo: state.borradorFormulario.tipoTrabajo,
         oficio: state.borradorFormulario.oficio,
         cuando: state.borradorFormulario.cuando,
         zona: state.borradorFormulario.donde,
         referencia: state.borradorFormulario.referencia,
-        fecha: 'Publicado recién',
-        estado: 'Esperando que te escriban',
-        estadoTipo: 'nuevo',
+        fecha: 'Recién',
+        estado: esOffline ? 'Guardado · Falta publicar' : 'Esperando que te escriban', // C3
+        estadoTipo: esOffline ? 'guardado' : 'nuevo',
+        sinSenal: esOffline,
         puedeCancelar: true
       };
 
       guardarPedidoLocalStorage(nuevoPedido);
       limpiarBorradorLocalStorage();
 
-      // Detección de conectividad offline
-      if (!navigator.onLine) {
+      // Detección de conectividad offline (C3)
+      if (esOffline) {
         abrirModal({
           titulo: 'Guardado sin señal',
           descripcion: 'Sin señal: tu pedido se guardó en el celular y se publica solo cuando vuelva la señal a Serrano.',
@@ -1318,46 +1542,55 @@ function bindEventosFormulario(contenedor) {
 // ----------------------------------------------------------------------------
 function renderVistaMisTrabajos(contenedor) {
   const pedidosLocales = cargarPedidosLocalStorage();
-  // Combinar pedidos reales con los ejemplos del wireframe
-  const todosLosTrabajos = [...pedidosLocales, ...TRABAJOS_MUESTRA];
+  // Según la pestaña activa (C2): "Lo que pedí" combina pedidos locales y muestra; "Lo que hago" muestra trabajos tomados
+  const listaMostrar = state.tabMisTrabajos === 'pedi' 
+    ? [...pedidosLocales, ...TRABAJOS_MUESTRA] 
+    : TRABAJOS_HAGO_MUESTRA;
 
   contenedor.innerHTML = `
-    <div class="max-w-2xl mx-auto space-y-8 animate-fadeIn pb-16">
+    <div class="max-w-2xl mx-auto space-y-8 animate-fadeIn">
       
       <!-- ENCABEZADO -->
       <section class="space-y-4">
         <div>
-          <h1 class="text-[32px] sm:text-[36px] font-bold text-slate-900 dark:text-white leading-tight">Mis trabajos</h1>
-          <p class="text-[18px] text-slate-600 dark:text-slate-300 font-medium">Acá ves cómo sigue cada pedido.</p>
+          <h1 class="text-[32px] font-bold text-slate-900 dark:text-white leading-tight">Mis trabajos</h1>
         </div>
 
-        <!-- Selector Lo que pedí / Lo que hago -->
+        <!-- Selector Lo que pedí / Lo que hago (C2) -->
         <div class="inline-flex p-1.5 bg-slate-100 dark:bg-slate-800 rounded-2xl border-2 border-slate-300 dark:border-slate-700 w-full sm:w-auto" role="tablist">
-          <button type="button" id="tab-lo-que-pedi" role="tab" aria-selected="${state.tabMisTrabajos === 'pedi'}" class="flex-1 sm:flex-initial min-h-[56px] px-6 py-3 rounded-xl font-bold text-[18px] transition-all flex items-center justify-center gap-2 ${state.tabMisTrabajos === 'pedi' ? 'bg-white dark:bg-slate-900 text-serrano-blue dark:text-blue-400 shadow-md border border-slate-200 dark:border-slate-700' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}">
-            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            Lo que pedí
+          <button type="button" id="tab-lo-que-pedi" role="tab" aria-selected="${state.tabMisTrabajos === 'pedi'}" class="flex-1 sm:flex-initial min-h-[56px] px-3 sm:px-6 py-3 rounded-xl font-bold text-[18px] transition-all flex items-center justify-center gap-2 whitespace-nowrap ${state.tabMisTrabajos === 'pedi' ? 'bg-white dark:bg-slate-900 text-serrano-blue dark:text-blue-400 shadow-md border border-slate-200 dark:border-slate-700' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}">
+            ${state.tabMisTrabajos === 'pedi' ? '<svg class="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>' : ''}
+            <span>Lo que pedí</span>
           </button>
-          <button type="button" id="tab-lo-que-hago" role="tab" aria-selected="${state.tabMisTrabajos === 'hago'}" class="flex-1 sm:flex-initial min-h-[56px] px-6 py-3 rounded-xl font-bold text-[18px] transition-all flex items-center justify-center gap-2 ${state.tabMisTrabajos === 'hago' ? 'bg-white dark:bg-slate-900 text-serrano-blue dark:text-blue-400 shadow-md border border-slate-200 dark:border-slate-700' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}">
-            Lo que hago
+          <button type="button" id="tab-lo-que-hago" role="tab" aria-selected="${state.tabMisTrabajos === 'hago'}" class="flex-1 sm:flex-initial min-h-[56px] px-3 sm:px-6 py-3 rounded-xl font-bold text-[18px] transition-all flex items-center justify-center gap-2 whitespace-nowrap ${state.tabMisTrabajos === 'hago' ? 'bg-white dark:bg-slate-900 text-serrano-blue dark:text-blue-400 shadow-md border border-slate-200 dark:border-slate-700' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}">
+            ${state.tabMisTrabajos === 'hago' ? '<svg class="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>' : ''}
+            <span>Lo que hago</span>
           </button>
         </div>
+
+        <!-- C5: El texto va DESPUÉS de las pestañas -->
+        <p class="text-[18px] text-slate-600 dark:text-slate-300 font-medium">Acá ves cómo sigue cada pedido.</p>
       </section>
 
       <!-- LISTA DE TRABAJOS (WIREFRAME 20-MIS-TRABAJOS) -->
       <section class="space-y-5">
-        ${todosLosTrabajos.map(tr => `
+        ${listaMostrar.length === 0 ? `
+          <div class="p-8 text-center bg-slate-50 dark:bg-slate-800/50 rounded-2xl border-2 border-dashed border-slate-300 dark:border-slate-700 space-y-3">
+            <p class="text-[24px] font-bold text-slate-800 dark:text-slate-200">No tenés trabajos en esta sección todavía.</p>
+          </div>
+        ` : listaMostrar.map(tr => `
           <article class="card-tap p-6 bg-white dark:bg-slate-900 border-2 border-slate-300 dark:border-slate-700 rounded-2xl space-y-4 shadow-sm">
             
             <div class="space-y-1">
-              <h2 class="text-[22px] font-bold text-slate-900 dark:text-white">${tr.titulo}</h2>
+              <h2 class="text-[24px] font-bold text-slate-900 dark:text-white">${tr.titulo}</h2>
               
               <!-- Estado Visual no solo por color (Ícono + Forma + Texto) -->
-              <div class="flex items-center gap-2 text-[17px] font-bold pt-1">
+              <div class="flex items-center gap-2 text-[18px] font-bold pt-1">
                 ${tr.estado.includes('Terminado') ? `
                   <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
                   <span class="text-emerald-800 dark:text-emerald-300">${tr.estado}</span>
-                ` : tr.estado.includes('Guardado') ? `
-                  <span class="font-bold text-amber-600 dark:text-amber-400">...</span>
+                ` : (tr.estado.includes('Guardado') || tr.sinSenal) ? `
+                  <span class="font-bold text-amber-600 dark:text-amber-400 text-[18px]">...</span>
                   <span class="text-amber-800 dark:text-amber-300">${tr.estado}</span>
                 ` : `
                   <span class="w-4 h-4 rounded-full border-2 border-slate-700 dark:border-slate-300 inline-block flex-shrink-0" aria-hidden="true"></span>
@@ -1366,21 +1599,22 @@ function renderVistaMisTrabajos(contenedor) {
               </div>
             </div>
 
-            <p class="text-[17px] text-slate-600 dark:text-slate-400 font-medium">
-              ${tr.trabajadorNombre ? `${tr.trabajadorNombre} · ` : ''}${tr.zona} · ${tr.fecha}
+            <!-- C7: Formato Oficio · Zona · Cuándo / Metadatos -->
+            <p class="text-[14px] text-slate-600 dark:text-slate-400 font-medium">
+              ${tr.oficio ? `${tr.oficio} · ` : ''}${tr.zona} · ${tr.cuando || tr.fecha}${tr.trabajadorNombre && tr.trabajadorNombre !== 'Sin asignar' ? ` · ${tr.trabajadorNombre}` : ''}${tr.clienteNombre ? ` · Cliente: ${tr.clienteNombre}` : ''}
             </p>
 
             <div class="pt-1">
               ${tr.puedeOpinar ? `
-                <button type="button" class="btn btn-secondary w-full" onclick="mostrarToast('La calificación con estrellas se habilita en la entrega final.');">
+                <button type="button" class="btn btn-secondary w-full btn-accion-opinar">
                   Dejar opinión
                 </button>
-              ` : tr.estado.includes('Guardado') ? `
-                <button type="button" class="btn btn-secondary w-full" onclick="window.location.hash='#pedir';">
+              ` : (tr.estado.includes('Guardado') || tr.sinSenal) ? `
+                <a href="#pedir" class="btn btn-secondary w-full inline-flex items-center justify-center">
                   Ver pedido guardado
-                </button>
+                </a>
               ` : `
-                <button type="button" class="btn btn-secondary w-full" onclick="mostrarToast('Detalle del trabajo disponible en la versión final de la EFI.');">
+                <button type="button" class="btn btn-secondary w-full btn-accion-ver">
                   Ver trabajo
                 </button>
               `}
@@ -1392,7 +1626,7 @@ function renderVistaMisTrabajos(contenedor) {
 
       <!-- BOTÓN INFERIOR: PEDIR UNA CHANGA -->
       <section class="pt-4">
-        <a href="#pedir" class="btn btn-primary w-full shadow-lg text-center flex items-center justify-center gap-2">
+        <a href="#pedir" class="btn btn-primary w-full shadow-lg text-center flex items-center justify-center gap-2 force-text-white">
           <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
           <span>Pedir una changa</span>
         </a>
@@ -1401,7 +1635,7 @@ function renderVistaMisTrabajos(contenedor) {
     </div>
   `;
 
-  // Listeners de pestañas
+  // Listeners de pestañas (C2)
   const tabPedi = contenedor.querySelector('#tab-lo-que-pedi');
   const tabHago = contenedor.querySelector('#tab-lo-que-hago');
   if (tabPedi && tabHago) {
@@ -1411,9 +1645,22 @@ function renderVistaMisTrabajos(contenedor) {
     });
     tabHago.addEventListener('click', () => {
       state.tabMisTrabajos = 'hago';
-      mostrarToast('Mostrando changas en las que te postulaste.');
+      renderVistaMisTrabajos(contenedor);
     });
   }
+
+  // Listeners de acciones en tarjetas (B9: sin onclick inline)
+  contenedor.querySelectorAll('.btn-accion-opinar').forEach(btn => {
+    btn.addEventListener('click', () => {
+      mostrarToast('La calificación con estrellas se habilita en la entrega final.');
+    });
+  });
+
+  contenedor.querySelectorAll('.btn-accion-ver').forEach(btn => {
+    btn.addEventListener('click', () => {
+      mostrarToast('Detalle del trabajo disponible en la versión final de la EFI.');
+    });
+  });
 }
 
 // ----------------------------------------------------------------------------
@@ -1432,18 +1679,18 @@ function renderVistaPlaceholder(contenedor, titulo, descripcion) {
 
       <div class="space-y-3">
         <h1 class="text-[32px] font-bold text-slate-900 dark:text-white">${titulo}</h1>
-        <p class="text-[19px] text-slate-700 dark:text-slate-300 max-w-lg mx-auto font-normal leading-relaxed">
+        <p class="text-[18px] text-slate-700 dark:text-slate-300 max-w-lg mx-auto font-normal leading-relaxed">
           ${descripcion}
         </p>
       </div>
 
       <!-- Aviso formal del alcance de la entrega -->
-      <div class="p-5 bg-amber-50 dark:bg-amber-950/40 border-2 border-amber-300 dark:border-amber-800 rounded-2xl max-w-md mx-auto text-amber-950 dark:text-amber-200 text-[17px] font-medium">
+      <div class="p-5 bg-amber-50 dark:bg-amber-950/40 border-2 border-amber-300 dark:border-amber-800 rounded-2xl max-w-md mx-auto text-amber-950 dark:text-amber-200 text-[18px] font-medium">
         <strong>Alcance de entrega:</strong> Esta sección se suma en la versión final de la EFI.
       </div>
 
       <div class="pt-4">
-        <a href="#buscar" class="btn btn-primary inline-flex items-center gap-2.5">
+        <a href="#buscar" class="btn btn-primary inline-flex items-center gap-2.5 force-text-white">
           <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
           <span>Volver a Buscar</span>
         </a>
