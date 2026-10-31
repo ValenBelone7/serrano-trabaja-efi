@@ -408,7 +408,7 @@ function inicializarEventosRed() {
       localStorage.setItem('serrano_pedidos', JSON.stringify(pedidosActualizados));
       mostrarToast('Tu pedido ya se publicó.', 'exito');
       if (window.location.hash === '#mis-trabajos') {
-        const app = document.getElementById('app');
+        const app = document.getElementById('vista-contenedor');
         if (app) renderVistaMisTrabajos(app);
       }
     } else {

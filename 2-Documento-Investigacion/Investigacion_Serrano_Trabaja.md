@@ -88,7 +88,7 @@ Seguimos el bucle de Diseño Centrado en el Usuario de la Clase 6: **entender �
 | Organizar el contenido | **Card Sorting abierto** con 5 vecinos (21 al 26/09/2026): 24 tarjetas agrupadas en 6 categorías, con matriz de acuerdo. | [Card Sorting + Sitemap](Anexos/Reto6_Card_Sorting/) |
 | Flujo | User Flow con el camino principal y los caminos de error. | [User Flow](Anexos/User_Flow/Serrano_Trabaja_UserFlow.png) |
 | Sistema visual | **UI Kit:** paleta con contraste verificado, escala tipográfica y componentes con sus estados. | [UI Kit](Anexos/Reto5_UI_Kit/Reto5_UI_Kit_Serrano_Trabaja.md) |
-| Wireframes y prototipo | Wireframe low-fi navegable en Figma; prototipo de alta fidelidad y Web SPA. | [Reto 7](Anexos/Reto7_Wireframes_Figma/) · [Prototipo](../1-Prototipo-WebSPA/) |
+| Wireframes y prototipo | Wireframe low-fi navegable en Figma (21 pantallas, flujo completo) y Web SPA con las 4 pantallas centrales. | [Reto 7](Anexos/Reto7_Wireframes_Figma/) · [Prototipo](../1-Prototipo-WebSPA/) |
 | **Iterar** | Con el Card Sorting cambiamos la navegación (5 secciones), 8 etiquetas, el ingreso (un solo perfil) y corregimos colores que no llegaban a 4.5:1. | Este documento |
 
 ### Lo que cambió gracias a los usuarios
@@ -113,9 +113,68 @@ El detalle completo, concepto por concepto y con la pantalla donde se ve cada un
 - **Clase 5 — Color, tipografía y componentes:** UI Kit con paleta semántica, escala 32/24/18/14 y los 5 estados del botón.
 - **Clase 6 — DCU y Personas:** proceso iterativo; los 5 participantes del Card Sorting como perfiles reales.
 - **Clase 7 — Arquitectura de información:** Card Sorting abierto, sitemap de 5 secciones, rotulado en lenguaje cotidiano, búsqueda con filtros.
-- **Clases 8 y 9 — Prototipado:** wireframe low-fi navegable en Figma, componentes con variantes, prototipo de alta fidelidad y Web SPA.
+- **Clase 8 y Clase 8 ++ — Prototipado y Figma avanzado:** wireframe low-fi navegable en Figma, componentes con variantes, auto-layout, posición fija y Web SPA.
+- **Clase 9 — Sistemas de diseño y microinteracciones:** el UI Kit funciona como sistema de diseño (tokens, tipografía, componentes y reglas); la interfaz se puede leer en diseño atómico (botón y chip → card de trabajador → catálogo); botones que se hunden, chips con check y "Disponible hoy / Ocupado" como microinteracciones.
+- **Clase 10 — Accesibilidad aplicada y UX Writing:** cumplimos de sobra los mínimos de la clase (56px en vez de 44px, 18px en vez de 16px); textos funcionales con verbos concretos, estados vacíos que dicen qué hacer, confirmaciones y errores en lenguaje del vecino.
 
-**[COMPLETAR]:** agregar capturas de pantalla del prototipo junto a cada concepto (la matriz indica cuál sacar).
+### Capturas
+
+Capturas de la Web SPA (celular de 390px y escritorio de 1280px) y del wireframe de Figma. Todas las capturas de la SPA están en [`Capturas/`](Capturas/).
+
+**Confianza antes de contactar (Clase 1 · Emoción), proximidad y jerarquía (Clase 4), affordance e íconos con etiqueta (Clases 3 y 10)**
+
+<img src="Capturas/spa-06-ficha-trabajador.png" width="200" alt=""> <img src="Capturas/spa-17-foco-teclado.png" width="200" alt="">
+
+Ficha del trabajador: estrellas, "Teléfono confirmado" y "Lo recomiendan 4 vecinos" antes de Contactar. A la derecha, el anillo celeste de foco al navegar con teclado (WCAG: Operable).
+
+**Búsqueda y filtros (Clase 7), diseño atómico (Clase 9), estado vacío (Clase 10)**
+
+<img src="Capturas/spa-02-buscar-completo-mobile.png" width="200" alt=""> <img src="Capturas/spa-03-buscar-filtro-albanileria.png" width="200" alt=""> <img src="Capturas/spa-04-buscar-estado-vacio.png" width="200" alt="">
+
+Buscar: chips de oficio y zona; la card de trabajador es una molécula que se repite en el catálogo (organismo). Con filtros sin resultados, la pantalla explica qué hacer y ofrece "Ver todos los trabajadores".
+
+**Esfuerzo–beneficio (Clase 2), 5 estados del botón (Clase 5), microinteracción que guía (Clase 9), UX Writing y errores (Clase 10)**
+
+<img src="Capturas/spa-08-pedir-inicial.png" width="200" alt=""> <img src="Capturas/spa-09-pedir-error.png" width="200" alt=""> <img src="Capturas/spa-10-pedir-listo.png" width="200" alt="">
+
+Pedir una changa: arranca sin nada elegido y el botón dice "Falta: …"; el error tiene borde + ícono + texto y no borra lo escrito; al completar, "Todo listo para publicar."
+
+**Confirmaciones (Clase 10), feedback inmediato (Clase 3)**
+
+<img src="Capturas/spa-11-pedido-publicado-modal.png" width="200" alt=""> <img src="Capturas/spa-07-ficha-contactar-modal.png" width="200" alt="">
+
+Ventanas de confirmación con botones que dicen lo que hacen ("Ver Mis trabajos", "Abrir Mensajes") en vez de "OK".
+
+**Pilar de desempeño: funciona con señal débil (Clases 1 y 2)**
+
+<img src="Capturas/spa-14-sin-senal-guardado.png" width="200" alt=""> <img src="Capturas/spa-15-sin-senal-falta-publicar.png" width="200" alt=""> <img src="Capturas/spa-16-volvio-la-senal.png" width="200" alt="">
+
+Sin señal, el pedido se guarda en el celular ("Guardado · Falta publicar"); cuando vuelve la señal se publica solo y avisa "Tu pedido ya se publicó."
+
+**Sistema de organización (Clase 7), estados sin depender del color (Clase 2)**
+
+<img src="Capturas/spa-12-mis-trabajos.png" width="200" alt=""> <img src="Capturas/spa-13-mis-trabajos-lo-que-hago.png" width="200" alt="">
+
+Mis trabajos: "Lo que pedí" y "Lo que hago"; cada estado tiene ícono y texto (círculo, check, "…"), no solo color.
+
+**No solo color (Clases 2 y 10)**
+
+<img src="Capturas/spa-18-escala-de-grises.png" width="200" alt="">
+
+La misma pantalla en escala de grises: la opción elegida, la disponibilidad y los botones se siguen entendiendo.
+
+**Responsive, tokens de diseño y modo oscuro (Clases 8 ++ y 9)**
+
+<img src="Capturas/spa-20-buscar-desktop.png" width="420" alt=""> <img src="Capturas/spa-22-modo-oscuro-desktop.png" width="420" alt="">
+
+Escritorio: barra de navegación arriba y catálogo en 3 columnas. El modo oscuro cambia los valores de los tokens de color, no cada pantalla.
+
+**Wireframe low-fi navegable (Clase 8), onboarding y patrones avanzados (Clase 10)**
+
+<img src="Anexos/Reto7_Wireframes_Figma/v2-actual/03-Que-busco.png" width="200" alt=""> <img src="Anexos/Reto7_Wireframes_Figma/v2-actual/25-Opinion.png" width="200" alt=""> <img src="Anexos/Reto7_Wireframes_Figma/v2-actual/50-Mi-perfil.png" width="200" alt="">
+
+Pantallas del wireframe de Figma que completan el flujo: la pregunta inicial "¿Buscás a alguien o buscás changas?", la opinión con estrellas grandes y "Disponible hoy / Ocupado" en Mi perfil.
+
 
 ## 7. Equipo
 
@@ -129,7 +188,7 @@ El detalle completo, concepto por concepto y con la pantalla donde se ve cada un
 | Anexo | Contenido |
 |---|---|
 | [Reto1-2_Usabilidad_A11y/](Anexos/Reto1-2_Usabilidad_A11y/) | TP de Usabilidad y A11y + bocetos mobile/desktop |
-| [Reto5_UI_Kit/](Anexos/Reto5_UI_Kit/) | UI Kit (versión visual: prototipo con `?kit`) |
+| [Reto5_UI_Kit/](Anexos/Reto5_UI_Kit/) | UI Kit: paleta, tipografía, componentes y reglas (se ve aplicado en la Web SPA) |
 | [Reto6_Card_Sorting/](Anexos/Reto6_Card_Sorting/) | Sesiones, análisis y sitemap |
 | [Reto7_Wireframes_Figma/](Anexos/Reto7_Wireframes_Figma/) | Wireframe low-fi navegable en Figma |
 | [User_Flow/](Anexos/User_Flow/) | User Flow (PNG + SVG editable) |

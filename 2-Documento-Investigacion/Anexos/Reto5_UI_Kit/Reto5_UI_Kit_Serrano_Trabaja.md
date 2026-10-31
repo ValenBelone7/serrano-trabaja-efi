@@ -1,7 +1,7 @@
 # Reto 5 — UI Kit de Serrano Trabaja
 
 **Integrantes:** Tiago Pescara y Valentín Belone
-**Versión visual:** abrir el prototipo con `?kit` al final de la dirección (ej.: `http://localhost:8443/?kit`). Muestra los mismos componentes que usa la app, así que lo que está en este documento y lo que se ve en el prototipo no pueden diferir.
+**Dónde se ve aplicado:** en la [Web SPA](../../../1-Prototipo-WebSPA/web-spa/) (los colores y estados están en `style.css`) y, en grises, en el [wireframe de Figma](../Reto7_Wireframes_Figma/).
 
 ---
 
@@ -83,7 +83,7 @@ Ejemplo con el botón principal de la app, **"Pedir una changa"**: está *Disabl
 | Variante | Uso |
 |---|---|
 | Secundario (gris con borde) | "Reenviar código", "Avisame si hay changas nuevas", "No, volver" |
-| Contactar | Siempre la **mano abierta** + "Contactar a Juan". No se usa el tubo de teléfono: el contacto es por mensaje y el ícono no depende de una referencia cultural |
+| Contactar | Siempre la **mano abierta** + "Contactar", con la aclaración debajo: "Contactar abre la conversación con Carlos.". No se usa el tubo de teléfono: el contacto es por mensaje y el ícono no depende de una referencia cultural |
 | Peligro (rojo) | Solo para acciones que no se pueden deshacer: "Sí, cancelar este trabajo", "Sí, salir". Siempre después de una pantalla de confirmación |
 | Acción de menor peso | Texto subrayado + ícono, con área de toque de 56px: "Avisar de un problema" |
 

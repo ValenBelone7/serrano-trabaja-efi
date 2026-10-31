@@ -1,7 +1,7 @@
 # Reto 7 — Wireframe low-fi + prototipo en Figma
 
-**Link al archivo de Figma:** [COMPLETAR]
-**Link al modo presentación (prototipo navegable):** [COMPLETAR]
+**Link al archivo de Figma:** [Serrano Trabaja — Prototipo EFI](https://www.figma.com/design/uOYgW0ScLaP8cp4Wmuth8n/Serrano-Trabaja---Prototipo-EFI?node-id=0-1&t=colHn7zReRDBS3I3-1)
+**Link al modo presentación (prototipo navegable):** [Abrir el prototipo](https://www.figma.com/proto/uOYgW0ScLaP8cp4Wmuth8n/Serrano-Trabaja---Prototipo-EFI?node-id=3-3&p=f&t=UXTqK97816BF5O1T-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=3%3A3)
 
 ## v2 — actual ([`v2-actual/`](v2-actual/))
 

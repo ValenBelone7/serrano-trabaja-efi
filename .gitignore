@@ -4,3 +4,6 @@ dist/
 *.log
 .DS_Store
 .playwright-mcp/
+
+# Prototipo generado con Figma Make: no forma parte de la entrega
+1-Prototipo-WebSPA/referencia-figma-make/

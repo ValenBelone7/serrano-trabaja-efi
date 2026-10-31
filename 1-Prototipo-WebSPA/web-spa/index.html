@@ -59,7 +59,7 @@
 
   <!-- Encabezado / Navbar Superior (Fija) -->
   <header class="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b-2 border-slate-200 dark:border-slate-800 transition-colors">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between gap-6">
       
       <!-- Marca / Logo -->
       <a href="#buscar" class="flex items-center gap-3 group focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500 rounded-lg p-1.5" aria-label="Serrano Trabaja - Ir al inicio">
@@ -71,28 +71,28 @@
           </svg>
         </span>
         <div class="flex flex-col">
-          <span class="font-bold text-[24px] tracking-tight leading-none text-slate-900 dark:text-white">
+          <span class="font-bold text-[18px] sm:text-[24px] tracking-tight leading-none whitespace-nowrap text-slate-900 dark:text-white">
             SERRANO <span class="font-semibold text-serrano-blue dark:text-blue-400">TRABAJA</span>
           </span>
-          <span class="text-[14px] font-medium text-slate-500 dark:text-slate-400 tracking-wide">Pueblo de Serrano · Cba</span>
+          <span class="text-[14px] font-medium text-slate-500 dark:text-slate-400 tracking-wide whitespace-nowrap">Pueblo de Serrano · Cba</span>
         </div>
       </a>
 
       <!-- Navegación de Escritorio (≥ 1024px) -->
       <nav class="hidden lg:flex items-center gap-1.5" aria-label="Navegación principal de escritorio" id="nav-desktop">
-        <a href="#buscar" data-nav="buscar" class="nav-item-desktop px-4 py-3 rounded-lg font-semibold text-[18px] text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500 transition-colors">
+        <a href="#buscar" data-nav="buscar" class="nav-item-desktop whitespace-nowrap min-h-[56px] inline-flex items-center px-3 xl:px-4 py-3 rounded-lg font-semibold text-[18px] text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500 transition-colors">
           Buscar
         </a>
-        <a href="#mis-trabajos" data-nav="mis-trabajos" class="nav-item-desktop px-4 py-3 rounded-lg font-semibold text-[18px] text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500 transition-colors">
+        <a href="#mis-trabajos" data-nav="mis-trabajos" class="nav-item-desktop whitespace-nowrap min-h-[56px] inline-flex items-center px-3 xl:px-4 py-3 rounded-lg font-semibold text-[18px] text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500 transition-colors">
           Mis trabajos
         </a>
-        <a href="#pagos" data-nav="pagos" class="nav-item-desktop px-4 py-3 rounded-lg font-semibold text-[18px] text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500 transition-colors">
+        <a href="#pagos" data-nav="pagos" class="nav-item-desktop whitespace-nowrap min-h-[56px] inline-flex items-center px-3 xl:px-4 py-3 rounded-lg font-semibold text-[18px] text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500 transition-colors">
           Pagos
         </a>
-        <a href="#mensajes" data-nav="mensajes" class="nav-item-desktop px-4 py-3 rounded-lg font-semibold text-[18px] text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500 transition-colors">
+        <a href="#mensajes" data-nav="mensajes" class="nav-item-desktop whitespace-nowrap min-h-[56px] inline-flex items-center px-3 xl:px-4 py-3 rounded-lg font-semibold text-[18px] text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500 transition-colors">
           Mensajes
         </a>
-        <a href="#mi-perfil" data-nav="mi-perfil" class="nav-item-desktop px-4 py-3 rounded-lg font-semibold text-[18px] text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500 transition-colors">
+        <a href="#mi-perfil" data-nav="mi-perfil" class="nav-item-desktop whitespace-nowrap min-h-[56px] inline-flex items-center px-3 xl:px-4 py-3 rounded-lg font-semibold text-[18px] text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500 transition-colors">
           Mi perfil
         </a>
       </nav>
@@ -116,7 +116,7 @@
           <svg id="icon-luna" class="w-6 h-6 text-blue-400 hidden flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
           </svg>
-          <span id="texto-tema" class="hidden sm:inline font-semibold text-[18px]">Modo oscuro</span>
+          <span id="texto-tema" class="hidden sm:inline lg:hidden xl:inline whitespace-nowrap font-semibold text-[18px]">Modo oscuro</span>
         </button>
       </div>
 
